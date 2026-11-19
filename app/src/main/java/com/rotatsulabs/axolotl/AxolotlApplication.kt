@@ -8,9 +8,6 @@ import androidx.media3.session.SessionToken
 import com.funny.data_saver.core.DataSaverConverter.registerTypeConverters
 import com.google.common.util.concurrent.MoreExecutors
 import com.google.gson.GsonBuilder
-import com.google.gson.TypeAdapter
-import com.google.gson.stream.JsonReader
-import com.google.gson.stream.JsonWriter
 import com.tencent.mmkv.MMKV
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +20,7 @@ import com.rotatsulabs.axolotl.core.data.library.MusicLibrary
 import com.rotatsulabs.axolotl.core.data.library.PlayList
 import com.rotatsulabs.axolotl.core.data.library.Song
 import com.rotatsulabs.axolotl.core.data.library.StringWrapper
+import com.rotatsulabs.axolotl.core.data.storage.UriTypeAdapter
 import kotlin.system.exitProcess
 
 class AxolotlApplication : Application() {
@@ -145,16 +143,6 @@ class ImmutableListTypeAdapter<T> : JsonSerializer<ImmutableList<T>>,
         return ImmutableList.copyOf(list)
     }
 }*/
-
-class UriTypeAdapter : TypeAdapter<Uri>() {
-    override fun write(out: JsonWriter, value: Uri?) {
-        out.value(value.toString())
-    }
-
-    override fun read(`in`: JsonReader): Uri {
-        return Uri.parse(`in`.nextString())
-    }
-}
 
 /*
 class UriSerializer : JsonSerializer<Uri> {

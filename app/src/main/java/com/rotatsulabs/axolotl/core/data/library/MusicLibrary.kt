@@ -22,7 +22,7 @@ import uk.akane.libphonograph.constructor.ItemConstructor
 import uk.akane.libphonograph.reader.Reader
 import uk.akane.libphonograph.reader.ReaderConfiguration
 import uk.akane.libphonograph.reader.ReaderResult
-import com.rotatsulabs.axolotl.UriTypeAdapter
+import com.rotatsulabs.axolotl.core.data.storage.UriTypeAdapter
 import com.rotatsulabs.axolotl.core.data.storage.NormalSaver
 import com.rotatsulabs.axolotl.core.data.storage.SongListSaver
 import com.rotatsulabs.axolotl.core.data.model.thumb
