@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
 import io.github.alexzhirkevich.cupertino.CupertinoSwitch
 import com.rotatsulabs.axolotl.R
 import com.rotatsulabs.axolotl.code.utils.others.Vibrator
-import com.rotatsulabs.axolotl.ui.widgets.basic.YosWrapper
+import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
 
 
 @Composable
@@ -229,7 +229,7 @@ fun DefaultItem(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.End
         ) {
-            YosWrapper {
+            KeyedContent {
                 backIcon?.invoke()
             }
         }

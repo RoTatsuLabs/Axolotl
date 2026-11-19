@@ -49,12 +49,12 @@ import com.rotatsulabs.axolotl.data.libraries.MusicLibrary.hideFolders
 import com.rotatsulabs.axolotl.data.objects.LibraryObject
 import com.rotatsulabs.axolotl.ui.UI
 import com.rotatsulabs.axolotl.ui.pages.settings.SettingBackground
-import com.rotatsulabs.axolotl.ui.theme.YosRoundedCornerShape
+import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
 import com.rotatsulabs.axolotl.ui.theme.withNight
 import com.rotatsulabs.axolotl.ui.toUI
 import com.rotatsulabs.axolotl.ui.widgets.basic.Title
-import com.rotatsulabs.axolotl.ui.widgets.basic.YosWrapper
-import com.rotatsulabs.axolotl.ui.widgets.basic.yosRoundColumn
+import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
+import com.rotatsulabs.axolotl.ui.widgets.basic.roundColumn
 
 @Composable
 fun LibraryOverview(navController: NavController) =
@@ -65,7 +65,7 @@ fun LibraryOverview(navController: NavController) =
             navController.popBackStack()
         },
         content = {
-            yosRoundColumn {
+            roundColumn {
                 itemsIndexed(
                     folders,
                     key = { _, folder -> folder.path }
@@ -110,7 +110,7 @@ private fun LazyItemScope.FolderItem(folder: Folder, itemClick: () -> Unit) {
     ) {
         println("重组：文件夹列表 ${folder.name}")
 
-        val shape = YosRoundedCornerShape(4.dp)
+        val shape = SmoothRoundedCornerShape(4.dp)
         val density = LocalDensity.current
 
         Image(painter = painterResource(id = R.drawable.placeholder_folder), contentDescription = null,
@@ -153,7 +153,7 @@ private fun LazyItemScope.FolderItem(folder: Folder, itemClick: () -> Unit) {
             )
         }
 
-        YosWrapper {
+        KeyedContent {
             val scope = rememberCoroutineScope()
             val context = LocalContext.current
 

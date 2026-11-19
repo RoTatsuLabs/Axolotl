@@ -12,7 +12,7 @@ import androidx.media3.exoplayer.audio.AudioSink
 import androidx.media3.exoplayer.mediacodec.MediaCodecSelector
 
 @OptIn(UnstableApi::class)
-class YosRenderFactory(context: Context) : DefaultRenderersFactory(context) {
+class AppRenderersFactory(context: Context) : DefaultRenderersFactory(context) {
     override fun buildAudioRenderers(
         context: Context,
         extensionRendererMode: Int,

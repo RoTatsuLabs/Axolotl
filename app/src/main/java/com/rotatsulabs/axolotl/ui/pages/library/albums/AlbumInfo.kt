@@ -57,7 +57,7 @@ import kotlinx.coroutines.launch
 import com.rotatsulabs.axolotl.R
 import com.rotatsulabs.axolotl.code.MediaController
 import com.rotatsulabs.axolotl.data.libraries.MusicLibrary
-import com.rotatsulabs.axolotl.data.libraries.YosMediaItem
+import com.rotatsulabs.axolotl.data.libraries.Song
 import com.rotatsulabs.axolotl.data.libraries.artistsList
 import com.rotatsulabs.axolotl.data.libraries.artistsName
 import com.rotatsulabs.axolotl.data.libraries.defaultArtists
@@ -68,7 +68,7 @@ import com.rotatsulabs.axolotl.ui.theme.withNight
 import com.rotatsulabs.axolotl.ui.widgets.basic.ImageQuality
 import com.rotatsulabs.axolotl.ui.widgets.basic.ShadowImage
 import com.rotatsulabs.axolotl.ui.widgets.basic.Title
-import com.rotatsulabs.axolotl.ui.widgets.basic.YosWrapper
+import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
 import com.rotatsulabs.axolotl.ui.widgets.effects.ShadowType
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -110,7 +110,7 @@ fun AlbumInfo(
                 }
             }
         } else {
-            val songs = MusicLibrary.Album[albumName.value].sortedWith(compareBy<YosMediaItem>{ it.trackNumber?:0 }.thenBy { it.title })
+            val songs = MusicLibrary.Album[albumName.value].sortedWith(compareBy<Song>{ it.trackNumber?:0 }.thenBy { it.title })
 
             /*Box(Modifier.height(56.dp), contentAlignment = Alignment.CenterStart) {
                 Icon(
@@ -214,7 +214,7 @@ fun AlbumInfo(
                                 .padding(top = 2.dp)
                         )
 
-                        YosWrapper {
+                        KeyedContent {
                             Row(
                                 Modifier
                                     .fillMaxWidth()
@@ -396,7 +396,7 @@ private fun AlbumDivider(modifier: Modifier = Modifier) =
 @Composable
 private fun AlbumSongsItem(
     modifier: Modifier = Modifier,
-    music: YosMediaItem,
+    music: Song,
     mainArtists: List<String>,
     onClick: () -> Unit
 ) {
@@ -431,7 +431,7 @@ private fun AlbumSongsItem(
                 overflow = TextOverflow.Ellipsis,
                 lineHeight = 20.sp
             )
-            YosWrapper {
+            KeyedContent {
                 val needShowArtists = remember(music) {
                     derivedStateOf {
                         !mainArtists.containsAll(music.artistsList ?: defaultArtists)

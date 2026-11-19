@@ -16,7 +16,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rotatsulabs.axolotl.data.libraries.YosMediaItem
+import com.rotatsulabs.axolotl.data.libraries.Song
 import com.rotatsulabs.axolotl.data.libraries.artistsName
 import com.rotatsulabs.axolotl.data.libraries.defaultArtistsName
 import com.rotatsulabs.axolotl.data.libraries.defaultTitle
@@ -24,7 +24,7 @@ import com.rotatsulabs.axolotl.ui.widgets.basic.ImageQuality
 import com.rotatsulabs.axolotl.ui.widgets.basic.ShadowImageWithCache
 
 @Composable
-fun /*LazyItemScope.*/MusicList(music: YosMediaItem, itemClick: () -> Unit) {
+fun /*LazyItemScope.*/MusicList(music: Song, itemClick: () -> Unit) {
     /*rememberSaveable(stateSaver = object : Saver<String?, Any> {
     override fun restore(value: Any): String? {
         return value as String?
@@ -50,7 +50,7 @@ LaunchedEffect(Unit) {
         mutableStateOf("00:00")
     }
     if (duration.value == "00:00") {
-        YosWrapper {
+        KeyedContent {
             LaunchedEffect(Unit) {
                 val time = MusicScanner(context).timeConversion(music().duration)
                 duration.value = time.min + ":" + time.sec

@@ -138,15 +138,15 @@ import com.rotatsulabs.axolotl.ui.pages.settings.performance.LyricSetting
 import com.rotatsulabs.axolotl.ui.pages.settings.performance.NotificationSetting
 import com.rotatsulabs.axolotl.ui.pages.settings.performance.userinterface.ScreenCornerSetDialog
 import com.rotatsulabs.axolotl.ui.pages.settings.performance.userinterface.UserInterfaceSetting
-import com.rotatsulabs.axolotl.ui.theme.YosMusicTheme
-import com.rotatsulabs.axolotl.ui.theme.YosRoundedCornerShape
+import com.rotatsulabs.axolotl.ui.theme.AxolotlTheme
+import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
 import com.rotatsulabs.axolotl.ui.theme.isFlamingoInDarkMode
 import com.rotatsulabs.axolotl.ui.theme.withNight
 import com.rotatsulabs.axolotl.ui.widgets.basic.BottomNavigator
 import com.rotatsulabs.axolotl.ui.widgets.basic.ImageQuality
 import com.rotatsulabs.axolotl.ui.widgets.basic.NavItem
 import com.rotatsulabs.axolotl.ui.widgets.basic.ShadowImageWithCache
-import com.rotatsulabs.axolotl.ui.widgets.basic.YosWrapper
+import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
 import java.io.File
 import kotlin.math.abs
 
@@ -170,7 +170,7 @@ class MainActivity : BaseActivity() {
         installSplashScreen()
         enableEdgeToEdge()
         setContent {
-            YosMusicTheme {
+            AxolotlTheme {
                 ProvideWindowInsets {
                     val context = LocalContext.current
                     val density = LocalDensity.current
@@ -221,7 +221,7 @@ class MainActivity : BaseActivity() {
                         }
                         // 记录当前路线
 
-                        YosWrapper {
+                        KeyedContent {
                             val backstackEntry =
                                 navController.currentBackStackEntryAsState()
                             route.value =
@@ -229,7 +229,7 @@ class MainActivity : BaseActivity() {
                         }
 
                         // 显示控制区域
-                        val yosBottomSheetConfig = object {
+                        val bottomSheetConfig = object {
                             val progress
                                 get() = if (parentHeight.intValue == 0) 0f else abs(offsetY.value / parentHeight.intValue).coerceIn(
                                     0f,
@@ -256,7 +256,7 @@ class MainActivity : BaseActivity() {
 
                         val showNowPlaying = remember("MainActivity_showNowPlaying") {
                             derivedStateOf {
-                                yosBottomSheetConfig.menuAlpha < 0.3f
+                                bottomSheetConfig.menuAlpha < 0.3f
                             }
                         }
 
@@ -267,7 +267,7 @@ class MainActivity : BaseActivity() {
 
                         val hazeState = remember { HazeState() }
 
-                        YosWrapper {
+                        KeyedContent {
                             val isNight = isFlamingoInDarkMode()
                             if (showNowPlaying.value) {
                                 rememberSystemUiController().run {
@@ -311,7 +311,7 @@ class MainActivity : BaseActivity() {
                         // 以下为实际显示
 
                         // 主界面
-                        YosWrapper {
+                        KeyedContent {
                             println("重组：主界面")
 
                             Surface(
@@ -319,7 +319,7 @@ class MainActivity : BaseActivity() {
                                     .fillMaxSize()
                                     .graphicsLayer {
                                         val thisMainContainerCardScale =
-                                            yosBottomSheetConfig.mainContainerCardScale
+                                            bottomSheetConfig.mainContainerCardScale
                                         scaleX = thisMainContainerCardScale
                                         scaleY = thisMainContainerCardScale
                                     }
@@ -327,16 +327,16 @@ class MainActivity : BaseActivity() {
                                         //compositingStrategy = CompositingStrategy.Offscreen
                                         //transformOrigin = TransformOrigin(0.5f, 1f)
 
-                                        if (yosBottomSheetConfig.thisShowCorner && !yosBottomSheetConfig.RTCorner) {
+                                        if (bottomSheetConfig.thisShowCorner && !bottomSheetConfig.RTCorner) {
                                             compositingStrategy = CompositingStrategy.Offscreen
                                             clip = true
-                                            shape = YosRoundedCornerShape(screenCorner.dp)
+                                            shape = SmoothRoundedCornerShape(screenCorner.dp)
                                         } else {
                                             compositingStrategy = CompositingStrategy.ModulateAlpha
                                             clip = false
                                         }
 
-                                        if (!yosBottomSheetConfig.barShowCorner) {
+                                        if (!bottomSheetConfig.barShowCorner) {
                                             alpha = 0f
                                         }
                                     }
@@ -347,7 +347,7 @@ class MainActivity : BaseActivity() {
                             ) {
                                 // 主界面本体
                                 SharedTransitionLayout {
-                                    YosWrapper {
+                                    KeyedContent {
                                         BackHandler(showNowPlaying.value) {
                                             // println("isVisible: ${showNowPlaying.value}, nowPageNowPlaying.value: ${nowPageNowPlaying.value}")
                                             if (nowPageNowPlaying.value != Album) {
@@ -362,7 +362,7 @@ class MainActivity : BaseActivity() {
                                         }
                                     }
 
-                                    YosWrapper {
+                                    KeyedContent {
                                         val animateSpeed = 340
                                         val animationSpec: FiniteAnimationSpec<IntSize> =
                                             tween(
@@ -501,7 +501,7 @@ class MainActivity : BaseActivity() {
                                 }
 
                                 // 底部导航栏
-                                YosWrapper {
+                                KeyedContent {
                                     val color =
                                         Color(0xFFF5F5F5) withNight /*Color(0xFF111111)*/ Color.Black
                                     Box(
@@ -632,7 +632,7 @@ class MainActivity : BaseActivity() {
                             }
 
                             // 弹窗
-                            YosWrapper {
+                            KeyedContent {
                                 val showCornerSetDialog =
                                     remember("MainActivity_showCornerSetDialog") {
                                         mutableStateOf(!SettingsLibrary.ScreenCornerSet)
@@ -649,8 +649,8 @@ class MainActivity : BaseActivity() {
                         }
 
                         // 播放条&播放界面
-                        YosWrapper {
-                            if (height.intValue == 0) return@YosWrapper
+                        KeyedContent {
+                            if (height.intValue == 0) return@KeyedContent
 
                             Box(
                                 modifier = Modifier
@@ -661,16 +661,16 @@ class MainActivity : BaseActivity() {
                                     .graphicsLayer {
                                         //compositingStrategy = CompositingStrategy.Offscreen
                                         val plus =
-                                            0.07f * yosBottomSheetConfig.progress
+                                            0.07f * bottomSheetConfig.progress
                                         this.scaleX = 0.93f + plus
                                         this.scaleY = 0.93f + plus
                                         this.translationY =
-                                            -(height.intValue + 10) * (yosBottomSheetConfig.menuAlpha)
+                                            -(height.intValue + 10) * (bottomSheetConfig.menuAlpha)
                                         this.transformOrigin = TransformOrigin(0.5f, 1f)
                                     },
                                 contentAlignment = Alignment.BottomCenter
                             ) {
-                                YosWrapper {
+                                KeyedContent {
                                     val miniPlayerHeightPx = remember("MainActivity_miniPlayerHeightPx") {
                                         with(density) {
                                             miniPlayerHeight.toPx()
@@ -694,7 +694,7 @@ class MainActivity : BaseActivity() {
                                     }
 
                                     /*.graphicsLayer {
-                                        if (yosBottomSheetConfig.barShowCorner) {
+                                        if (bottomSheetConfig.barShowCorner) {
                                             shadowElevation = 7.5.dp.toPx()
                                             spotShadowColor = Color.Black.copy(alpha = 0.2f)
 
@@ -706,7 +706,7 @@ class MainActivity : BaseActivity() {
                                         drawContent()
                                         drawOutline(
                                             outline = navShape.createOutline(size, layoutDirection, this),
-                                            color = color.copy(alpha = yosBottomSheetConfig.menuAlpha),
+                                            color = color.copy(alpha = bottomSheetConfig.menuAlpha),
                                             style = Stroke(width = 0.3.dp.toPx())
                                         )
                                     }*/
@@ -714,14 +714,14 @@ class MainActivity : BaseActivity() {
                                     Surface(
                                         modifier = Modifier.graphicsLayer {
                                             translationY =
-                                                ((parentHeight.intValue - miniPlayerHeightPx) * (1 - yosBottomSheetConfig.progress))
+                                                ((parentHeight.intValue - miniPlayerHeightPx) * (1 - bottomSheetConfig.progress))
 
-                                            if (yosBottomSheetConfig.barShowCorner) {
-                                                shape = YosRoundedCornerShape(
-                                                    roundSize = yosBottomSheetConfig.barShapeValue.dp,
+                                            if (bottomSheetConfig.barShowCorner) {
+                                                shape = SmoothRoundedCornerShape(
+                                                    roundSize = bottomSheetConfig.barShapeValue.dp,
                                                     mSize = Size(
                                                         width = size.width,
-                                                        height = (miniPlayerHeightPx + (parentHeight.intValue - miniPlayerHeightPx) * yosBottomSheetConfig.progress)
+                                                        height = (miniPlayerHeightPx + (parentHeight.intValue - miniPlayerHeightPx) * bottomSheetConfig.progress)
                                                     )
                                                 )
                                                 shadowElevation = miniPlayerShadow
@@ -729,16 +729,16 @@ class MainActivity : BaseActivity() {
                                             }
                                         }
                                             .graphicsLayer {
-                                                //translationY = ((parentHeight.intValue - miniPlayerHeightPx) * (1 - yosBottomSheetConfig.progress))
+                                                //translationY = ((parentHeight.intValue - miniPlayerHeightPx) * (1 - bottomSheetConfig.progress))
 
-                                                if (yosBottomSheetConfig.barShowCorner) {
+                                                if (bottomSheetConfig.barShowCorner) {
                                                     compositingStrategy = CompositingStrategy.Offscreen
                                                     clip = true
-                                                    shape = YosRoundedCornerShape(
-                                                        roundSize = yosBottomSheetConfig.barShapeValue.dp,
+                                                    shape = SmoothRoundedCornerShape(
+                                                        roundSize = bottomSheetConfig.barShapeValue.dp,
                                                         mSize = Size(
                                                             width = size.width,
-                                                            height = (miniPlayerHeightPx + (parentHeight.intValue - miniPlayerHeightPx) * yosBottomSheetConfig.progress)
+                                                            height = (miniPlayerHeightPx + (parentHeight.intValue - miniPlayerHeightPx) * bottomSheetConfig.progress)
                                                         )
                                                     )
                                                 } else {
@@ -795,7 +795,7 @@ class MainActivity : BaseActivity() {
                                             }
 
                                         // NowPlaying
-                                        YosWrapper {
+                                        KeyedContent {
                                             NowPlaying(
                                                 mainViewModel = mainViewModel,
                                                 mediaViewModel = mediaViewModel,
@@ -805,17 +805,17 @@ class MainActivity : BaseActivity() {
                                                     isPlaying.value = it
                                                 },
                                                 nowPageLambda = { nowPageNowPlaying.value },
-                                                showMiniPlayer = { yosBottomSheetConfig.showMenu }
+                                                showMiniPlayer = { bottomSheetConfig.showMenu }
                                             ) {
                                                 nowPageNowPlaying.value = it
                                             }
                                         }
 
                                         // 迷你播放状态
-                                        YosWrapper {
+                                        KeyedContent {
                                             //println("变换：菜单透明度 $menuAlpha")
-                                            if (yosBottomSheetConfig.showMenu) {
-                                                YosWrapper {
+                                            if (bottomSheetConfig.showMenu) {
+                                                KeyedContent {
                                                     Column(
                                                         Modifier
                                                             .fillMaxSize()
@@ -823,7 +823,7 @@ class MainActivity : BaseActivity() {
                                                                 compositingStrategy =
                                                                     CompositingStrategy.ModulateAlpha
                                                                 this.alpha =
-                                                                    yosBottomSheetConfig.menuAlpha
+                                                                    bottomSheetConfig.menuAlpha
                                                             }
                                                             .background(color)
                                                     ) {
@@ -844,13 +844,13 @@ class MainActivity : BaseActivity() {
                                                                     })
                                                         ) {
 
-                                                            YosWrapper {
+                                                            KeyedContent {
                                                                 val showMiniBarHaze = remember(
                                                                     "MainActivity_showMiniBarHaze",
-                                                                    yosBottomSheetConfig.menuAlpha
+                                                                    bottomSheetConfig.menuAlpha
                                                                 ) {
                                                                     derivedStateOf {
-                                                                        yosBottomSheetConfig.menuAlpha == 1f && SettingsLibrary.BarBlurEffect
+                                                                        bottomSheetConfig.menuAlpha == 1f && SettingsLibrary.BarBlurEffect
                                                                     }
                                                                 }
                                                                 this@Column.AnimatedVisibility(
@@ -896,7 +896,7 @@ class MainActivity : BaseActivity() {
                                                                         .weight(1f),
                                                                     verticalAlignment = Alignment.CenterVertically
                                                                 ) {
-                                                                    YosWrapper {
+                                                                    KeyedContent {
                                                                         ShadowImageWithCache(
                                                                             dataLambda = { MediaViewModelObject.bitmap.value },
                                                                             contentDescription = null,
@@ -1065,7 +1065,7 @@ class MainActivity : BaseActivity() {
             }
         }
 
-        YosWrapper {
+        KeyedContent {
             LaunchedEffect(Unit) {
 
                 var permissions = emptyArray<String>()
@@ -1145,7 +1145,7 @@ class MainActivity : BaseActivity() {
             val bottomSheetState = rememberModalBottomSheetState()
             val scope = rememberCoroutineScope()
 
-            YosWrapper {
+            KeyedContent {
                 OptionDialog(
                     title = stringResource(id = R.string.permission_grant_title),
                     subTitle = stringResource(id = R.string.permission_grant_subtitle),

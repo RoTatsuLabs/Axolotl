@@ -133,7 +133,7 @@ import com.rotatsulabs.axolotl.code.MediaController.musicPlaying
 import com.rotatsulabs.axolotl.code.MediaController.playingMusicList
 import com.rotatsulabs.axolotl.code.SystemMediaControlResolver
 import com.rotatsulabs.axolotl.code.VolumeChangeReceiver
-import com.rotatsulabs.axolotl.code.YosPlaybackService
+import com.rotatsulabs.axolotl.code.PlaybackService
 import com.rotatsulabs.axolotl.code.utils.lrc.YosMediaEvent
 import com.rotatsulabs.axolotl.code.utils.lrc.YosUIConfig
 import com.rotatsulabs.axolotl.code.utils.others.Vibrator
@@ -141,7 +141,7 @@ import com.rotatsulabs.axolotl.code.utils.player.FadeExo.fadePause
 import com.rotatsulabs.axolotl.code.utils.player.FadeExo.fadePlay
 import com.rotatsulabs.axolotl.data.libraries.FavPlayListLibrary
 import com.rotatsulabs.axolotl.data.libraries.SettingsLibrary
-import com.rotatsulabs.axolotl.data.libraries.YosMediaItem
+import com.rotatsulabs.axolotl.data.libraries.Song
 import com.rotatsulabs.axolotl.data.libraries.artistsName
 import com.rotatsulabs.axolotl.data.libraries.defaultArtistsName
 import com.rotatsulabs.axolotl.data.libraries.defaultTitle
@@ -151,13 +151,13 @@ import com.rotatsulabs.axolotl.data.objects.MediaViewModelObject
 import com.rotatsulabs.axolotl.ui.pages.NowPlayingPage.Album
 import com.rotatsulabs.axolotl.ui.pages.NowPlayingPage.Lyric
 import com.rotatsulabs.axolotl.ui.pages.NowPlayingPage.PlayingList
-import com.rotatsulabs.axolotl.ui.theme.YosRoundedCornerShape
-import com.rotatsulabs.axolotl.ui.widgets.YosLyricView
-import com.rotatsulabs.axolotl.ui.widgets.effects.YosFloatingLight
+import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
+import com.rotatsulabs.axolotl.ui.widgets.LyricView
+import com.rotatsulabs.axolotl.ui.widgets.effects.FloatingLight
 import com.rotatsulabs.axolotl.ui.widgets.audio.MusicQualityIndicator
 import com.rotatsulabs.axolotl.ui.widgets.basic.ImageQuality
 import com.rotatsulabs.axolotl.ui.widgets.basic.ShadowImageWithCache
-import com.rotatsulabs.axolotl.ui.widgets.basic.YosWrapper
+import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
 import com.rotatsulabs.axolotl.ui.widgets.effects.ShadowType
 import com.rotatsulabs.axolotl.ui.widgets.effects.overlayEffect
 
@@ -244,7 +244,7 @@ fun NowPlaying(
         println("重组：NowPlaying")
 
         // 触摸超时
-        YosWrapper {
+        KeyedContent {
             LaunchedEffect(showControl.value, nowPageLambda(), lastClickTime.longValue) {
                 if (nowPageLambda() != Lyric && !showControl.value) {
                     showControl.value = true
@@ -263,7 +263,7 @@ fun NowPlaying(
 
 
         // 背景流光
-        YosWrapper {
+        KeyedContent {
             /*BlendBackgroundView(
         bitmapLambda = { bitmap.value },
         isPlayingLambda = { isPlaying.value },
@@ -271,7 +271,7 @@ fun NowPlaying(
     )*/
             println("重组：背景")
 
-            YosFloatingLight(
+            FloatingLight(
                 album = { bitmap.value },
                 isPlaying = isPlayingStatusLambda,
                 modifier = Modifier.fillMaxSize(),
@@ -282,7 +282,7 @@ fun NowPlaying(
 
 
         // 实际显示区
-        YosWrapper {
+        KeyedContent {
             /*
         val controlAlpha = animateFloatAsState(
             targetValue = if (showControl.value) 1f else 0f,
@@ -301,7 +301,7 @@ fun NowPlaying(
 
             val alphaAnim = remember { Animatable(0f) }
 
-            YosWrapper {
+            KeyedContent {
                 LaunchedEffect(nowPageLambda()) {
                     val targetAlpha = if (nowPageLambda() == Lyric) 1f else 0f
                     scope.launch {
@@ -317,7 +317,7 @@ fun NowPlaying(
             println("重组：主功能区")
 
             // 歌词
-            YosWrapper {
+            KeyedContent {
 
                 Column(
                     Modifier
@@ -328,7 +328,7 @@ fun NowPlaying(
                             this.alpha = alphaAnim.value
                         }
                 ) {
-                    println("重组：YosLyricView 外层 3")
+                    println("重组：LyricView 外层 3")
 
                     Lyric(
                         lrcEntries = { lrcEntries.value },
@@ -346,7 +346,7 @@ fun NowPlaying(
             }
 
             // 这是小把手
-            YosWrapper {
+            KeyedContent {
                 Column(Modifier.fillMaxWidth()) {
                     Box(
                         Modifier
@@ -369,7 +369,7 @@ fun NowPlaying(
             }
 
             // 主 View
-            YosWrapper {
+            KeyedContent {
                 SharedTransitionLayout {
                     Crossfade(
                         targetState = nowPageLambda(),
@@ -387,7 +387,7 @@ fun NowPlaying(
                                         .fillMaxSize()
                                         .clickable(enabled = false, onClick = {})
                                 ) {
-                                    YosWrapper {
+                                    KeyedContent {
                                         Column(Modifier.fillMaxHeight(0.595f)) {
                                             val isVisible = nowPageLambda() == Album
 
@@ -438,7 +438,7 @@ fun NowPlaying(
                                                         )
                                                     }
 
-                                                    YosWrapper {
+                                                    KeyedContent {
                                                         ActionButtonsRow {
                                                             it
                                                         }
@@ -451,7 +451,7 @@ fun NowPlaying(
 
                             Lyric ->
                                 Column(Modifier.fillMaxSize()) {
-                                    YosWrapper {
+                                    KeyedContent {
                                         val isVisible = nowPageLambda() == Lyric
                                         PlayingBar(
                                             modifier = Modifier.sharedElementWithCallerManagedVisibility(
@@ -470,7 +470,7 @@ fun NowPlaying(
                                 }
 
                             PlayingList ->
-                                YosWrapper {
+                                KeyedContent {
                                     Column(
                                         Modifier
                                             .fillMaxSize()
@@ -490,7 +490,7 @@ fun NowPlaying(
                                             musicPlayingLambda = { thisMusicPlaying.value }) {
                                             nowPageOnChanged(Album)
                                         }
-                                        YosWrapper {
+                                        KeyedContent {
                                             PlayingList(
                                                 shuffleModeEnabledLambda = { shuffleModeEnabled.value },
                                                 shuffleModeOnChanged = { shuffleModeSet ->
@@ -511,7 +511,7 @@ fun NowPlaying(
             }
 
             // 音乐控制
-            YosWrapper {
+            KeyedContent {
                 Column(
                     Modifier
                         .fillMaxSize()
@@ -525,7 +525,7 @@ fun NowPlaying(
                     ) {
                         println("重组：控制区域外部")
 
-                        YosWrapper {
+                        KeyedContent {
                             if (showControl.value) {
                                 Box(
                                     modifier = Modifier
@@ -543,7 +543,7 @@ fun NowPlaying(
                             }
                         }
 
-                        YosWrapper {
+                        KeyedContent {
                             Column(
                                 Modifier.fillMaxSize(),
                                 verticalArrangement = Arrangement.Bottom
@@ -557,7 +557,7 @@ fun NowPlaying(
                                         shrinkTowards = Alignment.Top,
                                         targetHeight = { (it / 1.4).toInt() })
                                 ) {
-                                    YosWrapper {
+                                    KeyedContent {
                                         Row(
                                             Modifier
                                                 .fillMaxWidth()
@@ -569,7 +569,7 @@ fun NowPlaying(
                                                 },
                                             horizontalArrangement = Arrangement.End
                                         ) {
-                                            YosWrapper {
+                                            KeyedContent {
                                                 Box(
                                                     modifier = Modifier
                                                         .overlayEffect()
@@ -712,7 +712,7 @@ private fun ColumnScope.Album(
         visibilityThreshold = 0.001f
     )
 
-    YosWrapper {
+    KeyedContent {
         val dp = (7 + (27 * scale.value)).dp
         ShadowImageWithCache(
             dataLambda = albumUrl, contentDescription = null, modifier = Modifier
@@ -738,7 +738,7 @@ private fun PlayingList(
     shuffleModeOnChanged: (Boolean) -> Unit,
     repeatModeLambda: () -> Int,
     repeatModeOnChanged: (Int) -> Unit,
-    thisMusicPlayingLambda: () -> YosMediaItem?
+    thisMusicPlayingLambda: () -> Song?
 ) {
     val context = LocalContext.current
 
@@ -748,7 +748,7 @@ private fun PlayingList(
         playingMusicList
     }
 
-    YosWrapper {
+    KeyedContent {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -798,7 +798,7 @@ private fun PlayingList(
                         .alpha(0.6f)
                 ) {
                     val dp = 36.dp
-                    YosWrapper {
+                    KeyedContent {
                         val shuffleBackgroundAlpha =
                             animateFloatAsState(targetValue = if (shuffleModeEnabledLambda()) 0.9f else 0f)
                         Box(
@@ -808,7 +808,7 @@ private fun PlayingList(
                                         Vibrator.click(context)
                                         mediaControl?.shuffleModeEnabled =
                                             !shuffleModeEnabledLambda()
-                                        mediaControl?.let { YosPlaybackService().setCustomButtons(it) }
+                                        mediaControl?.let { PlaybackService().setCustomButtons(it) }
                                         shuffleModeOnChanged(!shuffleModeEnabledLambda())
                                     },
                                     indication = null,
@@ -816,11 +816,11 @@ private fun PlayingList(
                                 .size(36.dp)
                                 .background(
                                     Color.White.copy(alpha = shuffleBackgroundAlpha.value),
-                                    shape = YosRoundedCornerShape(10.dp)
+                                    shape = SmoothRoundedCornerShape(10.dp)
                                 ),
                             contentAlignment = Alignment.Center
                         ) {
-                            YosWrapper {
+                            KeyedContent {
                                 val shuffleIconTint =
                                     animateColorAsState(targetValue = if (shuffleModeEnabledLambda()) Color.Black else Color.White)
                                 Icon(
@@ -833,7 +833,7 @@ private fun PlayingList(
                             }
                         }
                     }
-                    YosWrapper {
+                    KeyedContent {
                         val repeatHighlight =
                             repeatModeLambda() == REPEAT_MODE_ALL || repeatModeLambda() == REPEAT_MODE_ONE
                         val repeatBackgroundAlpha =
@@ -857,7 +857,7 @@ private fun PlayingList(
                                             }
                                         }
                                         mediaControl?.repeatMode = targetMode
-                                        mediaControl?.let { YosPlaybackService().setCustomButtons(it) }
+                                        mediaControl?.let { PlaybackService().setCustomButtons(it) }
                                         repeatModeOnChanged(targetMode)
                                     },
                                     indication = null,
@@ -866,11 +866,11 @@ private fun PlayingList(
                                 .size(36.dp)
                                 .background(
                                     Color.White.copy(alpha = repeatBackgroundAlpha.value),
-                                    shape = YosRoundedCornerShape(10.dp)
+                                    shape = SmoothRoundedCornerShape(10.dp)
                                 ),
                             contentAlignment = Alignment.Center
                         ) {
-                            YosWrapper {
+                            KeyedContent {
                                 AnimatedContent(targetState = repeatModeLambda(), transitionSpec = {
                                     fadeIn() togetherWith fadeOut()
                                 }) {
@@ -920,7 +920,7 @@ private fun PlayingList(
                         color = Color.White,
                         modifier = Modifier.padding(top = 18.dp, bottom = 12.dp)
                     )
-                    YosWrapper {
+                    KeyedContent {
                         val msg = remember("PlayingList_msg") {
                             derivedStateOf {
                                 if (musicList.value.isNullOrEmpty()) {
@@ -950,7 +950,7 @@ private fun PlayingList(
                     initialFirstVisibleItemScrollOffset = -15
                 )
 
-                YosWrapper {
+                KeyedContent {
                     CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
 
                         LazyColumn(state = state, modifier = Modifier
@@ -1019,7 +1019,7 @@ private fun PlayingList(
 }
 
 @Composable
-private fun LazyItemScope.SmallMusicListItem(music: YosMediaItem, itemClick: () -> Unit) {
+private fun LazyItemScope.SmallMusicListItem(music: Song, itemClick: () -> Unit) {
     Row(
         modifier = Modifier
             .height(64.dp)
@@ -1070,23 +1070,23 @@ private fun Lyric(
     mainViewModel: MainViewModel,
     mediaViewModel: MediaViewModel,
     onBackClick: () -> Unit
-) = YosWrapper {
+) = KeyedContent {
 
     val context = LocalContext.current
 
-    println("重组：YosLyricView 外层 2")
+    println("重组：LyricView 外层 2")
 
     Column(
         Modifier
             .fillMaxSize()
     ) {
-        YosWrapper {
-            println("重组：YosLyricView 外层 1")
+        KeyedContent {
+            println("重组：LyricView 外层 1")
 
             Spacer(modifier = Modifier.statusBarsHeight(110.dp))
 
 
-            YosLyricView(
+            LyricView(
                 //mediaViewModel = mediaViewModel,
                 lrcEntriesLambda = lrcEntries,
                 liveTimeLambda = {
@@ -1184,7 +1184,7 @@ private fun Lyric(
 }
 
 @Composable
-private fun ActionButtonsRow(musicPlayingLambda: () -> YosMediaItem?) {
+private fun ActionButtonsRow(musicPlayingLambda: () -> Song?) {
     Row(
         modifier = Modifier
             .overlayEffect(),
@@ -1290,9 +1290,9 @@ private fun ActionButtonsRow(musicPlayingLambda: () -> YosMediaItem?) {
 private fun PlayingBar(
     modifier: Modifier,
     albumUrlLambda: () -> Uri?,
-    musicPlayingLambda: () -> YosMediaItem?,
+    musicPlayingLambda: () -> Song?,
     onAlbumClick: () -> Unit
-) = YosWrapper {
+) = KeyedContent {
     Row(
         Modifier
             .fillMaxWidth()
@@ -1339,7 +1339,7 @@ private fun PlayingBar(
             )
         }
 
-        YosWrapper {
+        KeyedContent {
             ActionButtonsRow(musicPlayingLambda)
         }
     }
@@ -1355,7 +1355,7 @@ fun RowScope.AirPlay() {
     val audioDeviceName = remember("AirPlay_audioDeviceName") { mutableStateOf("") }
     val showName = remember("AirPlay_showName") { mutableStateOf(false) }
 
-    YosWrapper {
+    KeyedContent {
         DisposableEffect(Unit) {
             val filter = IntentFilter(BluetoothDevice.ACTION_ACL_CONNECTED).apply {
                 addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED)
@@ -1420,7 +1420,7 @@ fun RowScope.AirPlay() {
         }
     }
 
-    YosWrapper {
+    KeyedContent {
         val context = LocalContext.current
 
         val systemMediaControlResolver = SystemMediaControlResolver(context)
@@ -1521,7 +1521,7 @@ private fun PlayerControl(
         mutableStateOf(false)
     }
 
-    YosWrapper {
+    KeyedContent {
         Column(
             modifier = modifier
                 .fillMaxWidth()
@@ -1531,9 +1531,9 @@ private fun PlayerControl(
         ) {
             println("重组：控制区域内部")
 
-            YosWrapper {
+            KeyedContent {
                 // 启动作用
-                YosWrapper {
+                KeyedContent {
                     val lifecycleState =
                         LocalLifecycleOwner.current.lifecycle.currentStateFlow.collectAsState()
 
@@ -1570,7 +1570,7 @@ private fun PlayerControl(
                 }
 
                 // 进度条
-                YosWrapper {
+                KeyedContent {
                     //println("重组：控制区域内部 - 进度条")
                     Slider(
                         value = sliderPosition.floatValue,
@@ -1614,7 +1614,7 @@ private fun PlayerControl(
                 }
 
                 // 控制按钮&进度文本
-                YosWrapper {
+                KeyedContent {
                     //println("重组：控制区域内部 - 控制按钮&进度文本")
                     Box(
                         modifier = Modifier
@@ -1748,14 +1748,14 @@ private fun PlayerControl(
             }
 
             // 音量调节
-            YosWrapper {
+            KeyedContent {
                 if (SettingsLibrary.NowPlayingShowVolumeBar) {
                     VolumeSlider(context = context, onSlider)
                 }
             }
 
             // 底部 歌词&播放列表
-            YosWrapper {
+            KeyedContent {
                 //println("重组：控制区域内部 - 底部栏")
                 Row(
                     modifier = Modifier
@@ -1840,7 +1840,7 @@ private fun PlayerControl(
             }
 
             // 边距填充
-            /*YosWrapper {
+            /*KeyedContent {
                 Spacer(modifier = Modifier.navigationBarsHeight(5.dp))
             }*/
             // 为显示设备名称，迁移到 AirPlay 底部处理
@@ -1897,7 +1897,7 @@ private fun VolumeSlider(context: Context, onSlider: () -> Unit) {
             modifier = Modifier.size(20.dp)
         )
 
-        YosWrapper {
+        KeyedContent {
             val animatedProgress = if (sliding.value) {
                 sliderPosition
             } else {
@@ -1953,7 +1953,7 @@ private fun Track(
     sliderPositions: SliderPositions,
     modifier: Modifier = Modifier,
     height: Dp
-) = YosWrapper {
+) = KeyedContent {
     val inactiveTrackColor = Color.White.copy(alpha = 0.5f)
     val activeTrackColor = Color.White
     val inactiveTickColor = Color.White.copy(alpha = 0.5f)

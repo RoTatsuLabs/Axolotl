@@ -45,7 +45,7 @@ import kotlinx.coroutines.withContext
 import com.rotatsulabs.axolotl.code.utils.others.BitmapResolver
 import com.rotatsulabs.axolotl.data.libraries.SettingsLibrary.NowplayingBackgroundEffect
 import com.rotatsulabs.axolotl.ui.pages.NowPlayingPage
-import com.rotatsulabs.axolotl.ui.widgets.basic.YosWrapper
+import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
 
 @Stable
 private enum class Option {
@@ -56,7 +56,7 @@ private enum class Option {
 }
 
 @Composable
-fun YosFloatingLight(
+fun FloatingLight(
     modifier: Modifier,
     album: () -> Uri?,
     isPlaying: () -> Boolean,
@@ -71,7 +71,7 @@ fun YosFloatingLight(
 
     val context = LocalContext.current
     val imageLoader = ImageLoader(context)
-    YosWrapper {
+    KeyedContent {
         LaunchedEffect(album()) {
             if (album() == null) return@LaunchedEffect
             withContext(Dispatchers.IO) {
@@ -92,24 +92,24 @@ fun YosFloatingLight(
         }
     }
 
-    YosWrapper {
-        val lossEffect = remember("YosFloatingLight_lossEffect") {
+    KeyedContent {
+        val lossEffect = remember("FloatingLight_lossEffect") {
             derivedStateOf {
                 nowPage() != NowPlayingPage.Lyric
             }
         }
 
-        val useBackground = remember("YosFloatingLight_useBackground") {
+        val useBackground = remember("FloatingLight_useBackground") {
             derivedStateOf {
                 album() == null
             }
         }
 
         if (NowplayingBackgroundEffect) {
-            val lastOption = remember("YosFloatingLight_lastOption") {
+            val lastOption = remember("FloatingLight_lastOption") {
                 mutableStateOf(Option.Init.name)
             }
-            YosWrapper {
+            KeyedContent {
                 val lifecycleState =
                     LocalLifecycleOwner.current.lifecycle.currentStateFlow.collectAsState()
                 val active = lifecycleState.value.isAtLeast(Lifecycle.State.RESUMED)&&!showMiniPlayer()
@@ -153,7 +153,7 @@ fun YosFloatingLight(
                 }
             }
         } else {
-            YosWrapper {
+            KeyedContent {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current).data(data = drawable.value)
                         .crossfade(true).build(),
@@ -174,7 +174,7 @@ fun YosFloatingLight(
             }
         }
 
-        YosWrapper {
+        KeyedContent {
             val alpha = animateFloatAsState(
                 targetValue = if (lossEffect.value) 0.618f else 0f, animationSpec = tween(
                     durationMillis = 300,

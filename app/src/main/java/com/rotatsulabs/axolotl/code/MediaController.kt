@@ -58,11 +58,11 @@ import com.rotatsulabs.axolotl.code.utils.player.FadeExo.fadePause
 import com.rotatsulabs.axolotl.code.utils.player.FadeExo.fadePlay
 import com.rotatsulabs.axolotl.data.libraries.MusicLibrary
 import com.rotatsulabs.axolotl.data.libraries.MusicLibrary.toMediaItem
-import com.rotatsulabs.axolotl.data.libraries.MusicLibrary.toYosMediaItem
+import com.rotatsulabs.axolotl.data.libraries.MusicLibrary.toSong
 import com.rotatsulabs.axolotl.data.libraries.PlayListV1
 import com.rotatsulabs.axolotl.data.libraries.PlayStatus
 import com.rotatsulabs.axolotl.data.libraries.SettingsLibrary
-import com.rotatsulabs.axolotl.data.libraries.YosMediaItem
+import com.rotatsulabs.axolotl.data.libraries.Song
 import com.rotatsulabs.axolotl.data.libraries.uri
 import com.rotatsulabs.axolotl.data.objects.MainViewModelObject
 import com.rotatsulabs.axolotl.data.objects.MediaViewModelObject
@@ -70,17 +70,17 @@ import com.rotatsulabs.axolotl.data.objects.MediaViewModelObject
 @Stable
 object MediaController {
     @Stable
-    val mainMusicList: List<YosMediaItem>
+    val mainMusicList: List<Song>
         get() = MusicLibrary.songs
 
     @Stable
-    var playingMusicList = mutableStateOf<List<YosMediaItem>?>(null)
+    var playingMusicList = mutableStateOf<List<Song>?>(null)
 
     @Stable
     var mediaControl: MediaController? = null
 
     @Stable
-    var musicPlaying = mutableStateOf<YosMediaItem?>(null)
+    var musicPlaying = mutableStateOf<Song?>(null)
 
     @Stable
     var mediaSession: MediaSession? = null
@@ -154,7 +154,7 @@ object MediaController {
                                             )
                                         }
 
-                                        // YosPlaybackService().sendLyricTicker(lyricResult)
+                                        // PlaybackService().sendLyricTicker(lyricResult)
 
                                         lastLyric = line
                                     } catch (_: Exception) {
@@ -192,8 +192,8 @@ object MediaController {
 
 
     suspend fun prepare(
-        music: YosMediaItem,
-        thisMusicList: List<YosMediaItem>,
+        music: Song,
+        thisMusicList: List<Song>,
         position: Long = 0L,
         shuffleModeEnabled: Boolean = false,
         repeatMode: Int = REPEAT_MODE_ALL,
@@ -225,7 +225,7 @@ object MediaController {
                 withContext(Dispatchers.Main) {
                     mediaControl?.shuffleModeEnabled = shuffleModeEnabled
                     mediaControl?.repeatMode = repeatMode
-                    mediaControl?.let { YosPlaybackService().setCustomButtons(it) }
+                    mediaControl?.let { PlaybackService().setCustomButtons(it) }
                 }
             } else {
                 playingMusicList.value = thisMusicList
@@ -259,7 +259,7 @@ object MediaController {
         }
     }
 
-    fun onCase(mediaItem: YosMediaItem) {
+    fun onCase(mediaItem: Song) {
         CoroutineScope(Dispatchers.IO).launch {
             refresh(mediaItem)
         }
@@ -267,7 +267,7 @@ object MediaController {
 
     private var refreshJob: CompletableJob? = null
 
-    private fun refresh(music: YosMediaItem) {
+    private fun refresh(music: Song) {
         refreshJob?.cancel()
         refreshJob = Job()
 
@@ -291,7 +291,7 @@ object MediaController {
     }
 }
 
-class YosPlaybackService : MediaSessionService() {
+class PlaybackService : MediaSessionService() {
     private val notificationID = 1145
     private val channelID = "YosMediaControllerChannel"
 
@@ -429,7 +429,7 @@ class YosPlaybackService : MediaSessionService() {
             .build()
         val player = ExoPlayer.Builder(
             this,
-            YosRenderFactory(this)
+            AppRenderersFactory(this)
                 .setEnableAudioFloatOutput(
                     SettingsLibrary.AudioFloatOutput
                 )
@@ -503,7 +503,7 @@ class YosPlaybackService : MediaSessionService() {
                         val finalLrcContent = if (lrcContent == null) {
                             val lrcPath = "${thisPath?.substringBeforeLast(".")}.lrc"
                             println("获取歌词元数据失败，将读取：$lrcPath")
-                            AudioMetadataUtils.loadLrcFile(this@YosPlaybackService, lrcPath) ?: ""
+                            AudioMetadataUtils.loadLrcFile(this@PlaybackService, lrcPath) ?: ""
                         } else {
                             lrcContent
                         }
@@ -537,7 +537,7 @@ class YosPlaybackService : MediaSessionService() {
                     /*mediaSession?.let { MediaController.sendNotification(it,context) }*/
                     mediaItem?.let {
                         com.rotatsulabs.axolotl.code.MediaController.onCase(
-                            it.toYosMediaItem()
+                            it.toSong()
                         )
                     }
 
@@ -596,7 +596,7 @@ class YosPlaybackService : MediaSessionService() {
             .build()*/
 
         @Suppress("DEPRECATION")
-        class YosMediaSessionCallback : MediaSession.Callback {
+        class MediaSessionCallback : MediaSession.Callback {
             override fun onConnect(
                 session: MediaSession,
                 controller: MediaSession.ControllerInfo
@@ -681,7 +681,7 @@ class YosPlaybackService : MediaSessionService() {
                     )
                 )
                 .setShowPlayButtonIfPlaybackIsSuppressed(true)
-                .setCallback(YosMediaSessionCallback())
+                .setCallback(MediaSessionCallback())
                 .build()
         /*
                 val mediaButtonReceiver = ComponentName(this, MediaButtonReceiver::class.java)

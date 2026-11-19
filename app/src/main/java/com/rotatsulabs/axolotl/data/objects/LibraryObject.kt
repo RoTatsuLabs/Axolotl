@@ -4,7 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import com.rotatsulabs.axolotl.data.libraries.Folder
-import com.rotatsulabs.axolotl.data.libraries.YosMediaItem
+import com.rotatsulabs.axolotl.data.libraries.Song
 
 @Stable
 object LibraryObject {
@@ -19,14 +19,14 @@ object LibraryObject {
     }
 
     @Stable
-    private val targetList: MutableState<List<YosMediaItem>> = mutableStateOf(emptyList())
+    private val targetList: MutableState<List<Song>> = mutableStateOf(emptyList())
     @Stable
     private val targetListTitle = mutableStateOf("")
-    fun setTargetListWithTitle(title: String, list: List<YosMediaItem>) {
+    fun setTargetListWithTitle(title: String, list: List<Song>) {
         targetListTitle.value = title
         targetList.value = list
     }
-    fun getTargetListWithTitle(): Pair<String, List<YosMediaItem>> {
+    fun getTargetListWithTitle(): Pair<String, List<Song>> {
         return Pair(targetListTitle.value, targetList.value)
     }
 }

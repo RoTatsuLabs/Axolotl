@@ -3,7 +3,7 @@ package com.rotatsulabs.axolotl.code.utils.lrc
 import androidx.compose.runtime.Stable
 
 /**
- * YosLyricView 动画效果控制类
+ * LyricView 动画效果控制类
  *
  * 当前只有较少选项，等待后续开发
  *

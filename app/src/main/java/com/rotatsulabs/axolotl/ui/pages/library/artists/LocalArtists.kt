@@ -57,7 +57,7 @@ import com.rotatsulabs.axolotl.data.libraries.MusicLibrary
 import com.rotatsulabs.axolotl.ui.theme.withNight
 import com.rotatsulabs.axolotl.ui.widgets.basic.SearchTextField
 import com.rotatsulabs.axolotl.ui.widgets.basic.Title
-import com.rotatsulabs.axolotl.ui.widgets.basic.YosWrapper
+import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
 
 @Composable
 fun LocalArtists(navController: NavController) {
@@ -101,7 +101,7 @@ fun LocalArtists(navController: NavController) {
             val useSearch = remember { derivedStateOf { searchText.value.isNotEmpty() } }
             val list = remember { mutableStateOf(artistsList) }
 
-            YosWrapper {
+            KeyedContent {
                 LaunchedEffect(searchText.value) {
                     withContext(Dispatchers.IO) {
                         val filteredList = withContext(Dispatchers.IO) {
@@ -188,7 +188,7 @@ private fun LazyItemScope.ArtistItem(
     ) {
         val songs = MusicLibrary.Artist[artistName]
         Box(contentAlignment = Alignment.Center, modifier = Modifier.size(48.dp)) {
-            YosWrapper {
+            KeyedContent {
                 val shape = CircleShape
 
                     val density = LocalDensity.current

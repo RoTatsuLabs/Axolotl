@@ -41,8 +41,8 @@ import com.blankj.utilcode.util.DeviceUtils
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.rotatsulabs.axolotl.code.utils.others.subStringX
-import com.rotatsulabs.axolotl.ui.theme.YosMusicTheme
-import com.rotatsulabs.axolotl.ui.theme.YosRoundedCornerShape
+import com.rotatsulabs.axolotl.ui.theme.AxolotlTheme
+import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
 import com.rotatsulabs.axolotl.ui.theme.isFlamingoInDarkMode
 import com.rotatsulabs.axolotl.ui.theme.withNight
 import com.rotatsulabs.axolotl.ui.widgets.basic.Title
@@ -69,7 +69,7 @@ class CrashActivity : ComponentActivity() {
         //enableEdgeToEdge()
         val crashInfo = getCrashInfo(true, intent)
         setContent {
-            YosMusicTheme {
+            AxolotlTheme {
                 ProvideWindowInsets {
 
                 Surface(
@@ -153,7 +153,7 @@ class CrashActivity : ComponentActivity() {
                 verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                val shape = YosRoundedCornerShape(12.dp)
+                val shape = SmoothRoundedCornerShape(12.dp)
 
                 Box(
                     modifier = Modifier

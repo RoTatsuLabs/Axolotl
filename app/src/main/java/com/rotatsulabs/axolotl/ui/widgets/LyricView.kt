@@ -101,23 +101,23 @@ import com.rotatsulabs.axolotl.code.utils.others.Vibrator
 import com.rotatsulabs.axolotl.data.libraries.SettingsLibrary
 import com.rotatsulabs.axolotl.data.objects.MainViewModelObject
 import com.rotatsulabs.axolotl.data.objects.MediaViewModelObject
-import com.rotatsulabs.axolotl.ui.widgets.basic.YosWrapper
+import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
-val yosEasing = CubicBezierEasing(0.75f, 0.0f, 0.25f, 1.0f)
+val lyricEasing = CubicBezierEasing(0.75f, 0.0f, 0.25f, 1.0f)
 
 /**
- * YosLyricView 主控件
+ * LyricView 主控件
  * @param lrcEntriesLambda 处理完毕的 Lrc 文本
  * @param liveTimeLambda 当前歌曲进度
- * @param mediaEvent YosLyricView 媒体事件
+ * @param mediaEvent LyricView 媒体事件
  * @param translationLambda 是否开启翻译
  * @param blurLambda 是否启用模糊效果
- * @param uiConfig YosLyricView UI 控制，仅管理在日常使用中不经常调节的选项
+ * @param uiConfig LyricView UI 控制，仅管理在日常使用中不经常调节的选项
  */
 @Composable
-fun YosLyricView(
+fun LyricView(
     //mediaViewModel: MediaViewModel,
     lrcEntriesLambda: () -> List<List<Pair<Float, String>>>,
     liveTimeLambda: () -> Int,
@@ -130,7 +130,7 @@ fun YosLyricView(
     modifier: Modifier,
     onBackClick: () -> Unit
 ) {
-    println("重组：YosLyricView")
+    println("重组：LyricView")
     val context = LocalContext.current
     val mainTextBasicColor = Color(uiConfig.mainTextBasicColor)
     val subTextBasicColor = Color(uiConfig.subTextBasicColor)
@@ -165,7 +165,7 @@ fun YosLyricView(
     } else {
         val scrollState = rememberLazyListState()
         val currentLyricIndex =
-            remember("YosLyricView_currentLyricIndex") { MainViewModelObject.syncLyricIndex }
+            remember("LyricView_currentLyricIndex") { MainViewModelObject.syncLyricIndex }
         /*val noAnimateItems by remember {
             derivedStateOf { scrollState.layoutInfo.totalItemsCount - scrollState.layoutInfo.visibleItemsInfo.size - 1 }
         }
@@ -184,14 +184,14 @@ fun YosLyricView(
             }
         }
         //val coroutineScope = rememberCoroutineScope()
-        val enableLyricScroll = remember("YosLyricView_enableLyricScroll") {
+        val enableLyricScroll = remember("LyricView_enableLyricScroll") {
             mutableStateOf(true)
         }
-        /*val lastClickTime = rememberSaveable(key = "YosLyricView_lastClickTime") {
+        /*val lastClickTime = rememberSaveable(key = "LyricView_lastClickTime") {
             mutableLongStateOf(0L)
         }*/
 
-        /*YosWrapper {
+        /*KeyedContent {
             LaunchedEffect(enableLyricScroll.value, lastClickTime.longValue) {
                 if (!enableLyricScroll.value) {
                     val time = 1500L
@@ -205,10 +205,10 @@ fun YosLyricView(
             }
         }*/
 
-        val height = rememberSaveable(key = "YosLyricView_height") { mutableIntStateOf(0) }
+        val height = rememberSaveable(key = "LyricView_height") { mutableIntStateOf(0) }
 
         val targetWeight = 0.0618f
-        val targetOffset = rememberSaveable(height.intValue, key = "YosLyricView_targetOffset") {
+        val targetOffset = rememberSaveable(height.intValue, key = "LyricView_targetOffset") {
             //println("计算边距使用：${height.intValue}")
             //println("计算边距为：${height.intValue * targetWeight}")
             height.intValue * targetWeight
@@ -222,29 +222,29 @@ fun YosLyricView(
             cacheSize = 32
         )
 
-        val visibleItems = remember("YosLyricView_visibleItems") {
+        val visibleItems = remember("LyricView_visibleItems") {
             derivedStateOf {
                 scrollState.layoutInfo.visibleItemsInfo
             }
         }
-        val targetItem = remember("YosLyricView_targetItem") {
+        val targetItem = remember("LyricView_targetItem") {
             derivedStateOf {
                 visibleItems.value.find {
                     it.index == currentLyricIndex.intValue + 1
                 }
             }
         }
-        val currentOffset = remember("YosLyricView_currentOffset", targetOffset) {
+        val currentOffset = remember("LyricView_currentOffset", targetOffset) {
             derivedStateOf {
                 targetItem.value?.offset ?: targetOffset.toInt()
             }
         }
-        val scrollDistance = remember("YosLyricView_scrollDistance", targetOffset) {
+        val scrollDistance = remember("LyricView_scrollDistance", targetOffset) {
             derivedStateOf {
                 currentOffset.value - targetOffset
             }
         }
-        val nowFirst = remember("YosLyricView_nowFirst") {
+        val nowFirst = remember("LyricView_nowFirst") {
             derivedStateOf {
                 scrollState.firstVisibleItemIndex
             }
@@ -272,7 +272,7 @@ fun YosLyricView(
             }
         }
 
-        YosWrapper {
+        KeyedContent {
             LaunchedEffect(isUserScrolling.value) {
                 if (isUserScrolling.value) {
                     enableLyricScroll.value = false
@@ -283,7 +283,7 @@ fun YosLyricView(
             }
         }
 
-        YosWrapper {
+        KeyedContent {
             LazyColumn(
                 state = scrollState,
                 contentPadding = PaddingValues(vertical = 16.dp),/*
@@ -370,7 +370,7 @@ fun YosLyricView(
                 itemsIndexed(
                     items = lrcEntries,
                     key = { _, lines -> lines }/*,
-                contentType = { _, _ -> "YosLyricView_item" }*/
+                contentType = { _, _ -> "LyricView_item" }*/
                 ) { index, lines ->
                     val isCurrent = remember(lines) {
                         derivedStateOf {
@@ -418,7 +418,7 @@ fun YosLyricView(
                             otherSideForLines.getOrElse(index) { false }
                         }
 
-                        YosWrapper {
+                        KeyedContent {
                             LyricItem(
                                 isCurrentLambda = {
                                     isCurrent.value
@@ -454,7 +454,7 @@ fun YosLyricView(
                     }
 
                     key(index) {
-                        YosWrapper {
+                        KeyedContent {
                             /*//println(mainLyricSide.value+":"+mainLyricSide.value.isNotBlank())
                         if ((*//*(mainLyricSide.isBlank() && isCurrent.value && countdownPercent.value != 0f) || *//*mainLyricSide.value.isNotBlank())) {
                                 val offset = animateDpAsState(
@@ -499,7 +499,7 @@ fun YosLyricView(
                                 mutableStateOf(space)
                             }
 
-                            YosWrapper {
+                            KeyedContent {
                                 LaunchedEffect(currentLyricIndex.intValue) {
                                     if (visibleItems.value.isEmpty()) {
                                         //println(mainLyric.value.text+" 未设置")
@@ -532,16 +532,16 @@ fun YosLyricView(
                                         dampingRatio = /*0.85f*/ 1f,
                                         visibilityThreshold = 0.0001.dp
                                     )
-                                    //tween(durationMillis = 510, easing = yosEasing)
+                                    //tween(durationMillis = 510, easing = lyricEasing)
                                 } else {
                                     tween(
                                         durationMillis = 550,
-                                        easing = yosEasing
+                                        easing = lyricEasing
                                     )
                                 }
                             )
 
-                            YosWrapper {
+                            KeyedContent {
                                 Spacer(modifier = Modifier.height(offset.value))
                             }
                         }
@@ -556,7 +556,7 @@ fun YosLyricView(
             }
         }
 
-        YosWrapper {
+        KeyedContent {
             //val lifecycleState = LocalLifecycleOwner.current.lifecycle.currentStateFlow.collectAsState()
             LaunchedEffect(currentLyricIndex.intValue, translationLambda()) {
                 try {
@@ -594,12 +594,12 @@ fun YosLyricView(
                                     durationMillis = abs(0.5 * currentOffset).toInt().coerceAtLeast(540)
                                         .coerceAtMost(1200),
                                     delayMillis = 0,
-                                    easing = yosEasing
+                                    easing = lyricEasing
                                 )*/
                                 animationSpec = tween(
                                     durationMillis = 550,
                                     //delayMillis = 15,
-                                    easing = yosEasing
+                                    easing = lyricEasing
                                 )
                                 /*spring(
                                     stiffness = 105F,
@@ -621,7 +621,7 @@ fun YosLyricView(
             }
         }
 
-        /*YosWrapper {
+        /*KeyedContent {
             LaunchedEffect(Unit) {
                 while (true) {
                     val liveTime = liveTimeLambda()
@@ -640,7 +640,7 @@ fun YosLyricView(
             }
         }*/
 
-        YosWrapper {
+        KeyedContent {
             //val lifecycleState = LocalLifecycleOwner.current.lifecycle.currentStateFlow.collectAsState()
             LaunchedEffect(Unit) {
                 /*if (!lifecycleState.value.isAtLeast(Lifecycle.State.RESUMED)) {
@@ -697,7 +697,7 @@ private fun LazyItemScope.Line(
     viewAlign: Alignment.Horizontal,
     draw: CacheDrawScope.(Constraints, TextLayoutResult) -> DrawResult
 ) =
-    YosWrapper {
+    KeyedContent {
         /*val styledString = remember(style, lines) {
             buildAnnotatedString {
                 lines.forEachIndexed { _, char ->
@@ -784,7 +784,7 @@ private fun LazyItemScope.Line(
     viewAlign: Alignment.Horizontal,
     draw: CacheDrawScope.(Constraints, TextLayoutResult) -> DrawResult
 ) =
-    YosWrapper {
+    KeyedContent {
         val styledString = remember(style, lines) {
             buildString {
                 lines.forEach { char ->
@@ -895,7 +895,7 @@ fun LazyItemScope.LyricItem(
 
     val liveTime = remember(mainLyric) { mutableIntStateOf(liveTimeLambda()) }
 
-    YosWrapper {
+    KeyedContent {
         val launch = remember(mainLyric) {
             derivedStateOf {
                 isLyricEmpty() || !isNotOneByOne.value
@@ -913,7 +913,7 @@ fun LazyItemScope.LyricItem(
         }
     }
 
-    YosWrapper {
+    KeyedContent {
         Column(
             Modifier
                 .padding(horizontal = 9.dp),
@@ -944,13 +944,13 @@ fun LazyItemScope.LyricItem(
             val tweenSpecWithDelay: AnimationSpec<Float> = remember(mainLyric) {
                 TweenSpec(
                     durationMillis = 270,
-                    easing = yosEasing,
+                    easing = lyricEasing,
                     delay = /*45*/ /*115*/ 110
                 )
             }
 
             val tweenSpecWithoutDelay: AnimationSpec<Float> = remember(mainLyric) {
-                TweenSpec(durationMillis = /*270*/ 300, easing = yosEasing,delay = 45)
+                TweenSpec(durationMillis = /*270*/ 300, easing = lyricEasing,delay = 45)
             }
 
             val scale = animateFloatAsState(
@@ -989,14 +989,14 @@ fun LazyItemScope.LyricItem(
                         show.value,
                         enter = fadeIn(animationSpec = TweenSpec(
                             durationMillis = 550,
-                            easing = yosEasing,
+                            easing = lyricEasing,
                             delay = 300
                         )) + scaleIn(
                             initialScale = 0.85f,
                             transformOrigin = otherSideAnimate,
                             animationSpec = TweenSpec(
                                 durationMillis = 550,
-                                easing = yosEasing,
+                                easing = lyricEasing,
                                 delay = 300
                             )
                         ),
@@ -1005,11 +1005,11 @@ fun LazyItemScope.LyricItem(
                             transformOrigin = otherSideAnimate,
                             animationSpec = TweenSpec(
                                 durationMillis = 340,
-                                easing = yosEasing
+                                easing = lyricEasing
                             )
                         )
                     ) {
-                        YosWrapper {
+                        KeyedContent {
                             LyricCard(
                                 { scale.value },
                                 cardPadding,
@@ -1035,7 +1035,7 @@ fun LazyItemScope.LyricItem(
                     }
                 }
             } else {
-                YosWrapper {
+                KeyedContent {
                     LyricCard(
                         { scale.value },
                         cardPadding,
@@ -1064,7 +1064,7 @@ fun LazyItemScope.LyricItem(
                             }
                         }
 
-                        YosWrapper {
+                        KeyedContent {
                             Column(
                                 Modifier
                                     .then(blurModifier.value)
@@ -1077,7 +1077,7 @@ fun LazyItemScope.LyricItem(
                                     remember(mainLyric) {
                                         TweenSpec(
                                             durationMillis = 350,
-                                            easing = yosEasing,
+                                            easing = lyricEasing,
                                             delay = 145
                                         )
                                     }
@@ -1086,12 +1086,12 @@ fun LazyItemScope.LyricItem(
                                     remember(mainLyric) {
                                         TweenSpec(
                                             durationMillis = 350,
-                                            easing = yosEasing,
+                                            easing = lyricEasing,
                                             delay = 80
                                         )
                                     }
 
-                                YosWrapper {
+                                KeyedContent {
                                     val thisAlphaAnimated = animateFloatAsState(
                                         targetValue = if (isCurrentLambda()) /*0.78f*/ 1f else 0.14f,
                                         animationSpec = if (isCurrentLambda()) alphaTweenSpecWithDelay else alphaTweenSpecWithoutDelay
@@ -1355,7 +1355,7 @@ fun LazyItemScope.LyricItem(
                                         }
                                     }
                                 }
-                                YosWrapper {
+                                KeyedContent {
                                     AnimatedVisibility(showTranslation && translation != null) {
                                         translation?.let {
                                             val translationAlpha = animateFloatAsState(
@@ -1415,7 +1415,7 @@ private fun LyricCard(
     //onClick: () -> Unit,
     content: @Composable () -> Unit,
 ) =
-    YosWrapper {
+    KeyedContent {
         Column(
             modifier = Modifier
                 .graphicsLayer {
@@ -1441,7 +1441,7 @@ fun CountdownAnimation(progress: () -> Float, colorLambda: () -> Color) {
         initialValue = 0.95f,
         targetValue = 1.12f,
         animationSpec = infiniteRepeatable(
-            animation = tween(1800, easing = yosEasing),
+            animation = tween(1800, easing = lyricEasing),
             repeatMode = RepeatMode.Reverse
         )
     )

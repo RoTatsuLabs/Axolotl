@@ -22,11 +22,11 @@ import com.rotatsulabs.axolotl.ui.pages.settings.ListHeader
 import com.rotatsulabs.axolotl.ui.pages.settings.SwitchItem
 import com.rotatsulabs.axolotl.ui.widgets.basic.RoundColumn
 import com.rotatsulabs.axolotl.ui.widgets.basic.Title
-import com.rotatsulabs.axolotl.ui.widgets.basic.YosWrapper
+import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
 
 @Composable
 fun LyricGetter(navController: NavController) =
-    YosWrapper {
+    KeyedContent {
         val lyricAPI by lazy { API() }
         Column(
             Modifier

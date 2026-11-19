@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
-import com.rotatsulabs.axolotl.ui.theme.YosRoundedCornerShape
+import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
 
 private val defaultCorner = 9.dp
 private val defaultPadding = 16.5.dp
@@ -24,7 +24,7 @@ private val defaultPadding = 16.5.dp
 @Composable
 fun RoundColumn(
     @SuppressLint("ModifierParameter") modifier: Modifier = Modifier.padding(horizontal = defaultPadding),
-    shape: Shape = YosRoundedCornerShape(defaultCorner),
+    shape: Shape = SmoothRoundedCornerShape(defaultCorner),
     backgroundColor: Color = MaterialTheme.colorScheme.onSecondary,
     content: @Composable () -> Unit
 ) = /*Card(
@@ -46,7 +46,7 @@ fun RoundColumn(
     }
 
 
-fun LazyListScope.yosRoundColumn(content: RoundColumnLazyListScope.() -> Unit) {
+fun LazyListScope.roundColumn(content: RoundColumnLazyListScope.() -> Unit) {
     content.invoke(RoundColumnLazyListScope(this))
 }
 
@@ -94,7 +94,7 @@ class RoundColumnLazyListScope(private val lazyListScope: LazyListScope) : LazyL
 
                 it == 0 -> {
                     RoundColumn(
-                        shape = YosRoundedCornerShape(
+                        shape = SmoothRoundedCornerShape(
                             topStart = defaultCorner,
                             topEnd = defaultCorner
                         ),
@@ -108,7 +108,7 @@ class RoundColumnLazyListScope(private val lazyListScope: LazyListScope) : LazyL
 
                 it == (count - 1) -> {
                     RoundColumn(
-                        shape = YosRoundedCornerShape(
+                        shape = SmoothRoundedCornerShape(
                             bottomStart = defaultCorner,
                             bottomEnd = defaultCorner
                         ),

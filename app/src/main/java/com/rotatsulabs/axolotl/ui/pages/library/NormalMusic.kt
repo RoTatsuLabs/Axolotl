@@ -70,7 +70,7 @@ import com.rotatsulabs.axolotl.data.libraries.MusicLibrary.songs
 import com.rotatsulabs.axolotl.data.libraries.SettingsLibrary
 import com.rotatsulabs.axolotl.data.libraries.SettingsLibrary.EnableDescending
 import com.rotatsulabs.axolotl.data.libraries.SettingsLibrary.SongSort
-import com.rotatsulabs.axolotl.data.libraries.YosMediaItem
+import com.rotatsulabs.axolotl.data.libraries.Song
 import com.rotatsulabs.axolotl.data.libraries.artistsList
 import com.rotatsulabs.axolotl.data.libraries.defaultArtists
 import com.rotatsulabs.axolotl.data.libraries.defaultTitle
@@ -80,7 +80,7 @@ import com.rotatsulabs.axolotl.ui.theme.withNight
 import com.rotatsulabs.axolotl.ui.widgets.basic.SearchTextField
 import com.rotatsulabs.axolotl.ui.widgets.basic.Title
 import com.rotatsulabs.axolotl.ui.widgets.basic.TitleBarIcon
-import com.rotatsulabs.axolotl.ui.widgets.basic.YosWrapper
+import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
 
 @Composable
 fun NormalMusic(navController: NavController) {
@@ -123,9 +123,9 @@ fun NormalMusic(navController: NavController) {
             }
         } else {
             val useSearch = remember { derivedStateOf { searchText.value.isNotEmpty() } }
-            val list: MutableState<List<YosMediaItem>> = remember { mutableStateOf(musicList.sortX()) }
+            val list: MutableState<List<Song>> = remember { mutableStateOf(musicList.sortX()) }
 
-            YosWrapper {
+            KeyedContent {
                 LaunchedEffect(searchText.value, SongSort, EnableDescending) {
                     withContext(Dispatchers.IO) {
                         // if (list.value.isEmpty()) delay(320)
@@ -158,7 +158,7 @@ fun NormalMusic(navController: NavController) {
             val buttonPosition = remember { mutableStateOf(Offset.Zero) }
 
             Box(Modifier.fillMaxSize()) {
-                YosWrapper {
+                KeyedContent {
                     FloatingMenu({ expanded.value }, {
                         expanded.value = it
                     }, buttonPosition.value)
@@ -276,7 +276,7 @@ fun NormalMusic(navController: NavController) {
     }
 }
 
-private fun List<YosMediaItem>.sortX() =
+private fun List<Song>.sortX() =
     this.sortedBy { song ->
         when (SongSort) {
             SettingsLibrary.SongSortEnum.MUSIC_TITLE.ordinal -> Pinyin.toPinyin(

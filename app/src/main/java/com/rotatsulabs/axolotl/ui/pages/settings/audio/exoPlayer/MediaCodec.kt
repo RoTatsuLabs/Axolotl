@@ -12,7 +12,7 @@ import com.rotatsulabs.axolotl.R
 import com.rotatsulabs.axolotl.ui.pages.settings.DefaultItem
 import com.rotatsulabs.axolotl.ui.pages.settings.SettingBackground
 import com.rotatsulabs.axolotl.ui.widgets.basic.Title
-import com.rotatsulabs.axolotl.ui.widgets.basic.yosRoundColumn
+import com.rotatsulabs.axolotl.ui.widgets.basic.roundColumn
 
 @Composable
 fun MediaCodec(navController: NavController) =
@@ -25,7 +25,7 @@ fun MediaCodec(navController: NavController) =
                 navController.popBackStack()
             },
             content = {
-                yosRoundColumn {
+                roundColumn {
                     itemsIndexed(
                         codecInfos.value,
                         key = { _, codec -> codec.name }/*,

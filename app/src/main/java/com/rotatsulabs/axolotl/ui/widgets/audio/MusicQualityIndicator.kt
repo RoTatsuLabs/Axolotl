@@ -32,8 +32,8 @@ import androidx.compose.ui.unit.sp
 import com.rotatsulabs.axolotl.R
 import com.rotatsulabs.axolotl.code.MediaController.musicPlaying
 import com.rotatsulabs.axolotl.data.objects.MediaViewModelObject
-import com.rotatsulabs.axolotl.ui.theme.YosRoundedCornerShape
-import com.rotatsulabs.axolotl.ui.widgets.basic.YosWrapper
+import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
+import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
 import com.rotatsulabs.axolotl.ui.widgets.effects.overlayEffect
 
 @Composable
@@ -114,7 +114,7 @@ fun MusicQualityIndicator() {
                                 .overlayEffect()
                                 .background(
                                     color = Color(0x14FFFFFF),
-                                    shape = YosRoundedCornerShape(5.dp)
+                                    shape = SmoothRoundedCornerShape(5.dp)
                                 )
                                 .height(20.dp)
                                 .padding(horizontal = 7.dp),
@@ -133,7 +133,7 @@ fun MusicQualityIndicator() {
                                 )
                                 Spacer(modifier = Modifier.width(5.dp))
 
-                                YosWrapper {
+                                KeyedContent {
 
                                     val text =
                                         if (isHiRes.value) "Hi-Res" else stringResource(id = R.string.music_quality_lossless)

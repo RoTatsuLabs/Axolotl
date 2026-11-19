@@ -1,7 +1,7 @@
 package com.rotatsulabs.axolotl.data.libraries
 
-val YosMediaItem.artistsList: List<String>?
+val Song.artistsList: List<String>?
     get() = this.artists?.toMultipleArtists()
 
-val YosMediaItem.artistsName: String?
+val Song.artistsName: String?
     get() = this.artistsList?.toArtistsString()

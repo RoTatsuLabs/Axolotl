@@ -57,18 +57,18 @@ import com.rotatsulabs.axolotl.R
 import com.rotatsulabs.axolotl.code.MediaController
 import com.rotatsulabs.axolotl.code.utils.others.BitmapResolver
 import com.rotatsulabs.axolotl.data.libraries.MusicLibrary
-import com.rotatsulabs.axolotl.data.libraries.YosMediaItem
+import com.rotatsulabs.axolotl.data.libraries.Song
 import com.rotatsulabs.axolotl.data.libraries.artistsName
 import com.rotatsulabs.axolotl.data.libraries.defaultAlbum
 import com.rotatsulabs.axolotl.data.libraries.defaultArtistsName
 import com.rotatsulabs.axolotl.data.libraries.defaultTitle
 import com.rotatsulabs.axolotl.data.models.ImageViewModel
 import com.rotatsulabs.axolotl.ui.UI
-import com.rotatsulabs.axolotl.ui.theme.YosRoundedCornerShape
+import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
 import com.rotatsulabs.axolotl.ui.toUI
 import com.rotatsulabs.axolotl.ui.widgets.effects.imageResolve
 import com.rotatsulabs.axolotl.ui.widgets.basic.Title
-import com.rotatsulabs.axolotl.ui.widgets.basic.YosWrapper
+import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
 
 @Composable
 fun Home(
@@ -99,7 +99,7 @@ fun RecommendCard(imageViewModel: ImageViewModel) {
             imageViewModel.recommendMusicList
         }
 
-        YosWrapper {
+        KeyedContent {
             LaunchedEffect(showRecommend.value) {
                 if (randomMusicList.value.isNotEmpty()) return@LaunchedEffect
                 randomMusicList.value = musicList.shuffled().take(5)
@@ -148,7 +148,7 @@ fun RecommendCard(imageViewModel: ImageViewModel) {
 }
 
 @Composable
-fun RecommendCardItem(subTitle: String, music: YosMediaItem, onClick: () -> Unit) =
+fun RecommendCardItem(subTitle: String, music: Song, onClick: () -> Unit) =
     Column(Modifier.width(268.dp)) {
 
         val drawable = remember(music.thumb) {
@@ -157,7 +157,7 @@ fun RecommendCardItem(subTitle: String, music: YosMediaItem, onClick: () -> Unit
 
         val context = LocalContext.current
         val imageLoader = ImageLoader(context)
-        YosWrapper {
+        KeyedContent {
             LaunchedEffect(Unit) {
                 if (music.thumb == null) return@LaunchedEffect
 
@@ -181,7 +181,7 @@ fun RecommendCardItem(subTitle: String, music: YosMediaItem, onClick: () -> Unit
 
         Text(text = subTitle, fontSize = 15.sp, lineHeight = 15.sp, modifier = Modifier.alpha(0.6f))
 
-        val shape = YosRoundedCornerShape(14.dp)
+        val shape = SmoothRoundedCornerShape(14.dp)
         // val cornerRadiusPx = 12.dp.toPx()
 
             val density = LocalDensity.current
@@ -234,7 +234,7 @@ fun RecommendCardItem(subTitle: String, music: YosMediaItem, onClick: () -> Unit
                     color = Color.Black,
                     contentColor = Color.White
                 ) {
-                    YosWrapper {
+                    KeyedContent {
                         AsyncImage(
                             model = ImageRequest.Builder(LocalContext.current)
                                 .data(data = drawable.value).crossfade(true).build(),

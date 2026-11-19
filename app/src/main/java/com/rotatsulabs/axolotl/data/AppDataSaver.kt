@@ -11,18 +11,18 @@ enum class DataType {
     NORMAL, SONG_LIST, SETTINGS, PLAY_LIST
 }
 
-val NormalSaver = YosDataSaver(DataType.NORMAL)
+val NormalSaver = AppDataSaver(DataType.NORMAL)
 // 通用数据存储，如隐藏的文件夹列表
-val SongListSaver = YosDataSaver(DataType.SONG_LIST)
+val SongListSaver = AppDataSaver(DataType.SONG_LIST)
 // 歌曲、隐藏的歌曲、所有文件夹
-val SettingsSaver = YosDataSaver(DataType.SETTINGS)
+val SettingsSaver = AppDataSaver(DataType.SETTINGS)
 // 存储设置数据
-val PlayListSaver = YosDataSaver(DataType.PLAY_LIST)
+val PlayListSaver = AppDataSaver(DataType.PLAY_LIST)
 // 歌曲列表 V2、喜爱的歌曲列表
 // 歌曲列表 V1 位于 YosPlayerCore
 
 @Stable
-class YosDataSaver(dataType: DataType = DataType.NORMAL) : DataSaverInterface() {
+class AppDataSaver(dataType: DataType = DataType.NORMAL) : DataSaverInterface() {
     private val mmkv = MMKV.mmkvWithID(getKey(dataType))
 
     private fun notifyExternalDataChanged(key: String, value: Any?) {
@@ -51,7 +51,7 @@ class YosDataSaver(dataType: DataType = DataType.NORMAL) : DataSaverInterface() 
                 is Boolean -> encode(key, data)
                 is Float -> encode(key, data)
                 is Double -> encode(key, data)
-                else -> throw IllegalArgumentException("YosDataSaver: Cannot save $data (${data!!::class.java})")
+                else -> throw IllegalArgumentException("AppDataSaver: Cannot save $data (${data!!::class.java})")
             }
             notifyExternalDataChanged(key, data)
         }
@@ -65,7 +65,7 @@ class YosDataSaver(dataType: DataType = DataType.NORMAL) : DataSaverInterface() 
             is Boolean -> decodeBool(key, default)
             is Float -> decodeFloat(key, default)
             is Double -> decodeDouble(key, default)
-            else -> throw IllegalArgumentException("YosDataSaver: Cannot read $default (${default!!::class.java})")
+            else -> throw IllegalArgumentException("AppDataSaver: Cannot read $default (${default!!::class.java})")
         }
         return@with res as T
     }

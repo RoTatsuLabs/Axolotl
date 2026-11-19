@@ -49,10 +49,10 @@ import com.rotatsulabs.axolotl.data.libraries.FavPlayListLibrary
 import com.rotatsulabs.axolotl.data.libraries.MusicLibrary.songs
 import com.rotatsulabs.axolotl.data.libraries.PlayList
 import com.rotatsulabs.axolotl.data.libraries.PlayListLibrary.playList
-import com.rotatsulabs.axolotl.data.libraries.YosMediaItem
+import com.rotatsulabs.axolotl.data.libraries.Song
 import com.rotatsulabs.axolotl.data.objects.LibraryObject
 import com.rotatsulabs.axolotl.ui.UI
-import com.rotatsulabs.axolotl.ui.theme.YosRoundedCornerShape
+import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
 import com.rotatsulabs.axolotl.ui.theme.withNight
 import com.rotatsulabs.axolotl.ui.toUI
 import com.rotatsulabs.axolotl.ui.widgets.basic.Title
@@ -139,8 +139,8 @@ fun PlayLists(navController: NavController) {
 
 private fun convertToSongList(
     songDataList: List<Uri>,
-    songs: List<YosMediaItem>
-): List<YosMediaItem> {
+    songs: List<Song>
+): List<Song> {
     return songDataList.fastMapNotNull { uri ->
         songs.find { it.uri == uri }
     }
@@ -166,7 +166,7 @@ private fun LazyItemScope.PlayListItem(playList: PlayList, itemClick: () -> Unit
     ) {
         println("重组：播放列表 ${playList.name}")
 
-        val shape = YosRoundedCornerShape(4.dp)
+        val shape = SmoothRoundedCornerShape(4.dp)
         val density = LocalDensity.current
 
         Image(painter = painterResource(id = R.drawable.placeholder_playlist_default),
@@ -239,7 +239,7 @@ private fun LazyItemScope.PlayListItem(playListType: PlayListType, title: String
     ) {
         println("重组：播放列表 ${playListType.name}")
 
-        val shape = YosRoundedCornerShape(4.dp)
+        val shape = SmoothRoundedCornerShape(4.dp)
         val density = LocalDensity.current
 
         Image(painter = painterResource(id = if (playListType == PlayListType.Add) R.drawable.placeholder_playlist_new else R.drawable.placeholder_playlist_default),

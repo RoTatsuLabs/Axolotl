@@ -9,7 +9,7 @@ import androidx.navigation.NavController
 import com.rotatsulabs.axolotl.R
 import com.rotatsulabs.axolotl.code.MediaController
 import com.rotatsulabs.axolotl.code.MediaController.mediaControl
-import com.rotatsulabs.axolotl.code.YosPlaybackService
+import com.rotatsulabs.axolotl.code.PlaybackService
 import com.rotatsulabs.axolotl.data.libraries.SettingsLibrary
 import com.rotatsulabs.axolotl.ui.pages.settings.GroupSpacer
 import com.rotatsulabs.axolotl.ui.pages.settings.ListHeader
@@ -38,7 +38,7 @@ fun NotificationSetting(navController: NavController) =
                                     SettingsLibrary.NotificationEnableIcon =
                                         !SettingsLibrary.NotificationEnableIcon
                                     MediaController.mediaControl?.let {
-                                        YosPlaybackService().setCustomButtons(
+                                        PlaybackService().setCustomButtons(
                                             it
                                         )
                                     }
@@ -58,7 +58,7 @@ fun NotificationSetting(navController: NavController) =
                                 onClick = {
                                     SettingsLibrary.NotificationSmallerIcon =
                                         !SettingsLibrary.NotificationSmallerIcon
-                                    mediaControl?.let { YosPlaybackService().setCustomButtons(it) }
+                                    mediaControl?.let { PlaybackService().setCustomButtons(it) }
                                 },
                                 checkedLambda = { SettingsLibrary.NotificationSmallerIcon }
                             )

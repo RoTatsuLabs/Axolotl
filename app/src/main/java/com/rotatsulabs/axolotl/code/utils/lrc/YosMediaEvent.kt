@@ -1,7 +1,7 @@
 package com.rotatsulabs.axolotl.code.utils.lrc
 
 /**
- * YosLyricView 媒体事件接口
+ * LyricView 媒体事件接口
  *
  * 之后可能在此接口实现更多其它功能
  */

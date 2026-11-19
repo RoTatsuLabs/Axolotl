@@ -17,15 +17,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.rotatsulabs.axolotl.code.MediaController.mediaControl
 import com.rotatsulabs.axolotl.code.MediaController.playingMusicList
-import com.rotatsulabs.axolotl.code.YosPlaybackService
+import com.rotatsulabs.axolotl.code.PlaybackService
 import com.rotatsulabs.axolotl.data.libraries.Folder
 import com.rotatsulabs.axolotl.data.libraries.MusicLibrary
 import com.rotatsulabs.axolotl.data.libraries.PlayList
-import com.rotatsulabs.axolotl.data.libraries.YosMediaItem
-import com.rotatsulabs.axolotl.data.libraries.YosStringWrapper
+import com.rotatsulabs.axolotl.data.libraries.Song
+import com.rotatsulabs.axolotl.data.libraries.StringWrapper
 import kotlin.system.exitProcess
 
-class YosBasicApplication : Application() {
+class AxolotlApplication : Application() {
     override fun onCreate() {
 
         Thread.setDefaultUncaughtExceptionHandler { _, e ->
@@ -72,16 +72,16 @@ class YosBasicApplication : Application() {
 
         registerTypeConverters(
             save = { bean -> gson.toJson(bean) },
-            restore = { str -> gson.fromJson(str, YosMediaItem::class.java) }
+            restore = { str -> gson.fromJson(str, Song::class.java) }
         )
 
         registerTypeConverters(
             save = { bean -> gson.toJson(bean) },
-            restore = { str -> gson.fromJson(str, YosStringWrapper::class.java) }
+            restore = { str -> gson.fromJson(str, StringWrapper::class.java) }
         )
 
         // 初始化媒体控制器
-        val sessionToken = SessionToken(this, ComponentName(this, YosPlaybackService::class.java))
+        val sessionToken = SessionToken(this, ComponentName(this, PlaybackService::class.java))
         val controllerFuture = MediaController.Builder(this, sessionToken).buildAsync()
         controllerFuture.addListener(
             {

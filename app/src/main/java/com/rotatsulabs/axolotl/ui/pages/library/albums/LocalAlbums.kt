@@ -38,7 +38,7 @@ import com.rotatsulabs.axolotl.ui.widgets.basic.SearchTextField
 import com.rotatsulabs.axolotl.ui.widgets.basic.ShadowImage
 import com.rotatsulabs.axolotl.ui.widgets.basic.Title
 import com.rotatsulabs.axolotl.ui.widgets.basic.TitleWithLazyVerticalGrid
-import com.rotatsulabs.axolotl.ui.widgets.basic.YosWrapper
+import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -89,7 +89,7 @@ fun LocalAlbums(
             val useSearch = remember { derivedStateOf { searchText.value.isNotEmpty() } }
             val list = remember { mutableStateOf(albumsList) }
 
-            YosWrapper {
+            KeyedContent {
                 LaunchedEffect(searchText.value) {
                     withContext(Dispatchers.IO) {
                         val filteredList = withContext(Dispatchers.IO) {

@@ -27,14 +27,14 @@ object PlayListLibrary {
     )
         private set
 
-    fun PlayList.addMusic(music: YosMediaItem) {
+    fun PlayList.addMusic(music: Song) {
         playList += copy(songDataList = songDataList.toMutableList().apply {
             music.uri?.let { add(it) }
         })
         playList -= this
     }
 
-    fun PlayList.removeMusic(music: YosMediaItem) {
+    fun PlayList.removeMusic(music: Song) {
         playList += copy(songDataList = songDataList.toMutableList().apply {
             val songToRemove = songDataList.find { data ->
                 music.uri == data
@@ -66,19 +66,19 @@ object FavPlayListLibrary {
     var favPlayList by mutableDataSaverListStateOf(
         dataSaverInterface = PlayListSaver,
         key = "yos_fav_play_list",
-        initialValue = listOf<YosMediaItem>()
+        initialValue = listOf<Song>()
     )
         private set
 
-    fun addMusic(music: YosMediaItem) {
+    fun addMusic(music: Song) {
         if (!favPlayList.any { it.uri == music.uri }) {
             favPlayList += music
         }
     }
 
-    fun removeMusic(music: YosMediaItem) {
+    fun removeMusic(music: Song) {
         favPlayList -= music
     }
 
-    fun isFavorite(music: YosMediaItem): Boolean = favPlayList.any { it.uri == music.uri }
+    fun isFavorite(music: Song): Boolean = favPlayList.any { it.uri == music.uri }
 }

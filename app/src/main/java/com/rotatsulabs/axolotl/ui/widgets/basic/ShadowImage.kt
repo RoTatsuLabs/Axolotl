@@ -24,7 +24,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Precision
 import com.rotatsulabs.axolotl.R
-import com.rotatsulabs.axolotl.ui.theme.YosRoundedCornerShape
+import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
 import com.rotatsulabs.axolotl.ui.widgets.effects.ShadowType
 import com.rotatsulabs.axolotl.ui.widgets.effects.dropShadow
 
@@ -51,8 +51,8 @@ fun ShadowImage(
     shadowOverlay: Boolean = false,
     cornerRadius: Dp = 10.dp,
     imageQuality: ImageQuality
-) = YosWrapper {
-    val shape = YosRoundedCornerShape(cornerRadius)
+) = KeyedContent {
+    val shape = SmoothRoundedCornerShape(cornerRadius)
     val density = LocalDensity.current
     val shadowAlphaPx = remember(dataLambda()) {
         with(density) { shadowAlpha.dp.toPx() }
@@ -126,8 +126,8 @@ fun ShadowImageWithCache(
     shadowOverlay: Boolean = false,
     cornerRadius: Dp = 8.dp,
     imageQuality: ImageQuality
-) = YosWrapper {
-    val shape = YosRoundedCornerShape(cornerRadius)
+) = KeyedContent {
+    val shape = SmoothRoundedCornerShape(cornerRadius)
     val url = dataLambda()
     val density = LocalDensity.current
     AsyncImage(

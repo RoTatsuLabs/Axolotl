@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.rotatsulabs.axolotl.ui.widgets.basic.YosWrapper
+import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
 
 private val DarkColorScheme = darkColorScheme(
     primary = primaryDark,
@@ -37,7 +37,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun YosMusicTheme(
+fun AxolotlTheme(
     darkTheme: Boolean = isFlamingoInDarkMode(),
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
@@ -53,7 +53,7 @@ fun YosMusicTheme(
     }
     val view = LocalView.current
     if (!view.isInEditMode) {
-        YosWrapper {
+        KeyedContent {
             SideEffect {
                 val window = (view.context as Activity).window
                 window.statusBarColor = Color.Transparent.toArgb()

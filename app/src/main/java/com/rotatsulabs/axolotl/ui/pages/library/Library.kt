@@ -15,7 +15,7 @@ import com.rotatsulabs.axolotl.data.objects.LibraryObject
 import com.rotatsulabs.axolotl.ui.UI
 import com.rotatsulabs.axolotl.ui.toUI
 import com.rotatsulabs.axolotl.ui.widgets.basic.Title
-import com.rotatsulabs.axolotl.ui.widgets.basic.YosWrapper
+import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
 
 @Composable
 fun Library(navController: NavController) =
@@ -64,7 +64,7 @@ fun Library(navController: NavController) =
                     }
                     LibraryDivider()
 
-                    YosWrapper {
+                    KeyedContent {
                         val targetTitle = stringResource(
                             id = R.string.page_library_songs
                         )

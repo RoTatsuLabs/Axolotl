@@ -11,7 +11,7 @@ import androidx.navigation.NavController
 import com.rotatsulabs.axolotl.R
 import com.rotatsulabs.axolotl.data.models.ImageViewModel
 import com.rotatsulabs.axolotl.ui.pages.library.Library
-import com.rotatsulabs.axolotl.ui.widgets.basic.YosWrapper
+import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
 
 /*@Stable
 object HomePage {
@@ -26,7 +26,7 @@ fun HomeNav(
     imageViewModel: ImageViewModel,
     nowPageOnChanged: (String) -> Unit
 ) =
-    YosWrapper {
+    KeyedContent {
         val context = LocalContext.current
         val home = context.getString(R.string.page_home_title)
         val library = context.getString(R.string.page_library_title)
@@ -38,13 +38,13 @@ fun HomeNav(
             else -> 0
         }
 
-        YosWrapper {
+        KeyedContent {
             LaunchedEffect(nowPageIndex) {
                 pagerState.animateScrollToPage(nowPageIndex)
             }
         }*/
 
-        YosWrapper {
+        KeyedContent {
             LaunchedEffect(pagerState) {
                 nowPageOnChanged(
                     when (pagerState.currentPage) {

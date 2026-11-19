@@ -3,13 +3,13 @@ package com.rotatsulabs.axolotl.code.utils.lrc
 import androidx.compose.runtime.Stable
 
 /**
- * YosLyricView UI 控制类
+ * LyricView UI 控制类
  *
- * 该类仅管理在日常使用中不经常调节的选项，如果是 翻译开关、模糊效果 的开关请直接在调用 YosLyricView() 时修改
+ * 该类仅管理在日常使用中不经常调节的选项，如果是 翻译开关、模糊效果 的开关请直接在调用 LyricView() 时修改
  *
- * @param edgeFade 是否启用 YosLyricView 的边缘渐隐效果
- * @param formatText 是否启用 YosLyricView 的歌词规整功能。启用后会将歌词的格式规整。例如，将歌词中的多个连续空格替换为单个空格，去除歌词首尾空格等
- * @param blankHeight YosLyricView 列表首尾的填充块高度，单位 dp
+ * @param edgeFade 是否启用 LyricView 的边缘渐隐效果
+ * @param formatText 是否启用 LyricView 的歌词规整功能。启用后会将歌词的格式规整。例如，将歌词中的多个连续空格替换为单个空格，去除歌词首尾空格等
+ * @param blankHeight LyricView 列表首尾的填充块高度，单位 dp
  * @param mainTextSize 主要文本的大小，单位 sp
  * @param subTextSize 次要文本的大小，单位 sp，若不填写将根据主要文本的大小自动计算
  * @param mainTextBasicColor 主要文本的底色

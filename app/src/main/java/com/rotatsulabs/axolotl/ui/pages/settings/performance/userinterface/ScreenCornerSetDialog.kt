@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
 import com.rotatsulabs.axolotl.R
 import com.rotatsulabs.axolotl.code.utils.others.Vibrator
 import com.rotatsulabs.axolotl.data.libraries.SettingsLibrary
-import com.rotatsulabs.axolotl.ui.theme.YosRoundedCornerShape
+import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
 import com.rotatsulabs.axolotl.ui.theme.withNight
 import com.rotatsulabs.axolotl.ui.widgets.basic.DialogContent
 import com.rotatsulabs.axolotl.ui.widgets.basic.OptionDialog
@@ -77,7 +77,7 @@ fun ScreenCornerSetDialog(modifier: Modifier = Modifier, onDismiss: () -> Unit) 
                             color = (Color.LightGray withNight Color.DarkGray).copy(
                                 alpha = 0.15f
                             ),
-                            shape = YosRoundedCornerShape(14.dp)
+                            shape = SmoothRoundedCornerShape(14.dp)
                         )
                         .padding(vertical = 15.dp, horizontal = 14.dp), verticalAlignment = Alignment.CenterVertically) {
 

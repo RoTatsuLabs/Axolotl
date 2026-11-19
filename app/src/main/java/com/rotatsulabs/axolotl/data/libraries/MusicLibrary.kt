@@ -53,14 +53,14 @@ data class Time(
 @Parcelize
 @Stable
 data class PlayListV1(
-    val mainMusicList: List<YosMediaItem>?,
-    val playingMusicList: List<YosMediaItem>?
+    val mainMusicList: List<Song>?,
+    val playingMusicList: List<Song>?
 ) : Parcelable
 
 @Parcelize
 @Stable
 data class PlayStatus(
-    val music: YosMediaItem?,
+    val music: Song?,
     val position: Long,
     val shuffleModeEnabled: Boolean,
     val repeatMode: Int
@@ -68,11 +68,11 @@ data class PlayStatus(
 
 @Parcelize
 @Stable
-data class Folder(val name: String, val path: String, val songs: List<YosMediaItem>) : Parcelable
+data class Folder(val name: String, val path: String, val songs: List<Song>) : Parcelable
 
 @Parcelize
 @Stable
-data class YosMediaItem(
+data class Song(
     val uri: Uri?,
     val mediaId: String?,
     val mimeType: String?,
@@ -105,7 +105,7 @@ data class YosMediaItem(
 
 @Stable
 @Parcelize
-data class YosStringWrapper(val value: String) : Parcelable
+data class StringWrapper(val value: String) : Parcelable
 
 @Stable
 object MusicLibrary {
@@ -118,7 +118,7 @@ object MusicLibrary {
     var hideSongs by mutableDataSaverListStateOf(
         dataSaverInterface = SongListSaver,
         key = "hide_songs",
-        initialValue = listOf<YosMediaItem>()
+        initialValue = listOf<Song>()
     )
         private set
 
@@ -130,17 +130,17 @@ object MusicLibrary {
         private set
 
     private var hideFoldersSaver by mutableDataSaverListStateOf(
-        dataSaverInterface = NormalSaver, key = "hide_folders", initialValue = listOf<YosStringWrapper>()
+        dataSaverInterface = NormalSaver, key = "hide_folders", initialValue = listOf<StringWrapper>()
     )
 
     val hideFolders: List<String>
         get() = hideFoldersSaver.map { it.value }
 
     private var songSaver by mutableDataSaverListStateOf(
-        dataSaverInterface = SongListSaver, key = "songs", initialValue = listOf<YosMediaItem>()
+        dataSaverInterface = SongListSaver, key = "songs", initialValue = listOf<Song>()
     )
 
-    val songs: List<YosMediaItem>
+    val songs: List<Song>
         get() = songSaver
             .filter { it !in hideSongs && it.uri !in folders.filter { thisFolders -> thisFolders.path in hideFolders }
                 .flatMap { thisFlatMap -> thisFlatMap.songs }
@@ -178,8 +178,8 @@ object MusicLibrary {
         return loadedData
     }
 
-    fun MediaItem.toYosMediaItem(): YosMediaItem {
-        return YosMediaItem(
+    fun MediaItem.toSong(): Song {
+        return Song(
             uri = this.localConfiguration?.uri,
             mediaId = this.mediaId,
             mimeType = this.localConfiguration?.mimeType,
@@ -211,7 +211,7 @@ object MusicLibrary {
         )
     }
 
-    fun YosMediaItem.toMediaItem(): MediaItem {
+    fun Song.toMediaItem(): MediaItem {
         return MediaItem.Builder()
             .setUri(this.uri)
             .setMediaId(this.mediaId!!)
@@ -283,15 +283,15 @@ object MusicLibrary {
         updateFolderVisibility(folder, hide = false)
     }
 
-    fun hideSong(song: YosMediaItem) {
+    fun hideSong(song: Song) {
         hideSongs = hideSongs + song
     }
 
-    fun unHideSong(song: YosMediaItem) {
+    fun unHideSong(song: Song) {
         hideSongs = hideSongs - song
     }
 
-    /*fun removeSong(song: YosMediaItem) {
+    /*fun removeSong(song: Song) {
         folders = folders.map {
             if (it.songs.contains(song)) {
                 return@map it.copy(
@@ -311,7 +311,7 @@ object MusicLibrary {
                 // folders = folders - folder
                 println("文件夹 匹配成功")
                 println("文件夹 已将 ${folder.path} 隐藏")
-                hideFoldersSaver = hideFoldersSaver.plus(YosStringWrapper(folder.path))
+                hideFoldersSaver = hideFoldersSaver.plus(StringWrapper(folder.path))
             }
         } else {
             println("文件夹 将显示 $folder")
@@ -319,7 +319,7 @@ object MusicLibrary {
                 // folders = folders + folder
                 println("文件夹 匹配成功")
                 println("文件夹 已将 ${folder.path} 显示")
-                hideFoldersSaver = hideFoldersSaver.minus(YosStringWrapper(folder.path))
+                hideFoldersSaver = hideFoldersSaver.minus(StringWrapper(folder.path))
             }
         }
     }
@@ -402,14 +402,14 @@ object MusicLibrary {
             // val folderList = result.folderStructure.folderList
 
             songSaver = result.songList.fastMap {
-                it.toYosMediaItem()
+                it.toSong()
             }
 
             result.shallowFolder.folderList.map {
                 val name = it.key
                 val path = it.value.songList.first().uri?.path?.substringBeforeLast("/")?:""
                 val songs = it.value.songList.fastMap { thisSong ->
-                    thisSong.toYosMediaItem()
+                    thisSong.toSong()
                 }
                 Folder(name, path, songs)
             }.let {

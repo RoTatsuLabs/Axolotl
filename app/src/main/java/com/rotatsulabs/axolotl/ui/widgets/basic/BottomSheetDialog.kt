@@ -43,19 +43,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rotatsulabs.axolotl.code.utils.others.Vibrator
 import com.rotatsulabs.axolotl.data.libraries.SettingsLibrary
-import com.rotatsulabs.axolotl.ui.theme.YosRoundedCornerShape
+import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
 import com.rotatsulabs.axolotl.ui.theme.withNight
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun YosBottomSheetDialog(
+private fun BottomSheetDialog(
     bottomSheetState: SheetState = rememberModalBottomSheetState(),
     properties: ModalBottomSheetProperties,
     cornerRadius: () -> Dp,
     onDismissRequest: () -> Unit,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    val edgeToEdgeEnabled by remember("YosBottomSheetDialog_edgeToEdgeEnabled") {
+    val edgeToEdgeEnabled by remember("BottomSheetDialog_edgeToEdgeEnabled") {
         mutableStateOf(
             true
         )
@@ -65,13 +65,13 @@ private fun YosBottomSheetDialog(
 
     val context = LocalContext.current
 
-    YosWrapper {
+    KeyedContent {
         LaunchedEffect(Unit) {
             Vibrator.click(context)
         }
     }
 
-    val shape = YosRoundedCornerShape(cornerRadius())
+    val shape = SmoothRoundedCornerShape(cornerRadius())
 
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
@@ -178,7 +178,7 @@ fun OptionDialog(
     onNegative: (() -> Unit)? = null,
     onDismissRequest: () -> Unit
 ) =
-    YosBottomSheetDialog(
+    BottomSheetDialog(
         bottomSheetState = bottomSheetState,
         properties = properties,
         onDismissRequest = onDismissRequest,
