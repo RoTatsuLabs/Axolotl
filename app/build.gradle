@@ -60,12 +60,6 @@ android {
         compose true
     }
 
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ["libs"]
-        }
-    }
-
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
