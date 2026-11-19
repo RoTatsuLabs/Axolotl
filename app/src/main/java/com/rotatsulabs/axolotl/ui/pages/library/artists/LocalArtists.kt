@@ -53,7 +53,7 @@ import coil.size.Precision
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import com.rotatsulabs.axolotl.R
-import com.rotatsulabs.axolotl.data.libraries.MusicLibrary
+import com.rotatsulabs.axolotl.core.data.library.MusicLibrary
 import com.rotatsulabs.axolotl.ui.theme.withNight
 import com.rotatsulabs.axolotl.ui.widgets.basic.SearchTextField
 import com.rotatsulabs.axolotl.ui.widgets.basic.Title

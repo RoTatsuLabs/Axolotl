@@ -33,8 +33,8 @@ import io.github.alexzhirkevich.cupertino.CupertinoSlider
 import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
 import kotlinx.coroutines.launch
 import com.rotatsulabs.axolotl.R
-import com.rotatsulabs.axolotl.code.utils.others.Vibrator
-import com.rotatsulabs.axolotl.data.libraries.SettingsLibrary
+import com.rotatsulabs.axolotl.core.playback.util.Vibrator
+import com.rotatsulabs.axolotl.core.data.settings.SettingsLibrary
 import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
 import com.rotatsulabs.axolotl.ui.theme.withNight
 import com.rotatsulabs.axolotl.ui.widgets.basic.DialogContent

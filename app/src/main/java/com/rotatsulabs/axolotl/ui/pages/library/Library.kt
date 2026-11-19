@@ -10,10 +10,10 @@ import androidx.navigation.NavController
 import io.github.alexzhirkevich.cupertino.icons.CupertinoIcons
 import io.github.alexzhirkevich.cupertino.icons.outlined.PersonCropCircle
 import com.rotatsulabs.axolotl.R
-import com.rotatsulabs.axolotl.data.libraries.MusicLibrary.songs
-import com.rotatsulabs.axolotl.data.objects.LibraryObject
-import com.rotatsulabs.axolotl.ui.UI
-import com.rotatsulabs.axolotl.ui.toUI
+import com.rotatsulabs.axolotl.core.data.library.MusicLibrary.songs
+import com.rotatsulabs.axolotl.core.data.state.LibraryObject
+import com.rotatsulabs.axolotl.ui.navigation.UI
+import com.rotatsulabs.axolotl.ui.navigation.toUI
 import com.rotatsulabs.axolotl.ui.widgets.basic.Title
 import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
 

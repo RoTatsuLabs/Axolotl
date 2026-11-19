@@ -64,7 +64,7 @@ import dev.chrisbanes.haze.hazeChild
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import com.rotatsulabs.axolotl.R
-import com.rotatsulabs.axolotl.data.libraries.SettingsLibrary
+import com.rotatsulabs.axolotl.core.data.settings.SettingsLibrary
 import com.rotatsulabs.axolotl.ui.theme.withNight
 
 /*@OptIn(ExperimentalCupertinoApi::class)

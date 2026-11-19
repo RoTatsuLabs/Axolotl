@@ -29,10 +29,10 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import com.rotatsulabs.axolotl.R
-import com.rotatsulabs.axolotl.data.libraries.MusicLibrary
-import com.rotatsulabs.axolotl.data.objects.LibraryObject
-import com.rotatsulabs.axolotl.ui.UI
-import com.rotatsulabs.axolotl.ui.toUI
+import com.rotatsulabs.axolotl.core.data.library.MusicLibrary
+import com.rotatsulabs.axolotl.core.data.state.LibraryObject
+import com.rotatsulabs.axolotl.ui.navigation.UI
+import com.rotatsulabs.axolotl.ui.navigation.toUI
 import com.rotatsulabs.axolotl.ui.widgets.basic.ImageQuality
 import com.rotatsulabs.axolotl.ui.widgets.basic.SearchTextField
 import com.rotatsulabs.axolotl.ui.widgets.basic.ShadowImage

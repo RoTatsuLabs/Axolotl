@@ -16,10 +16,10 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rotatsulabs.axolotl.data.libraries.Song
-import com.rotatsulabs.axolotl.data.libraries.artistsName
-import com.rotatsulabs.axolotl.data.libraries.defaultArtistsName
-import com.rotatsulabs.axolotl.data.libraries.defaultTitle
+import com.rotatsulabs.axolotl.core.data.library.Song
+import com.rotatsulabs.axolotl.core.data.model.artistsName
+import com.rotatsulabs.axolotl.core.data.model.defaultArtistsName
+import com.rotatsulabs.axolotl.core.data.model.defaultTitle
 import com.rotatsulabs.axolotl.ui.widgets.basic.ImageQuality
 import com.rotatsulabs.axolotl.ui.widgets.basic.ShadowImageWithCache
 

@@ -40,7 +40,7 @@ import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.DeviceUtils
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.rotatsulabs.axolotl.code.utils.others.subStringX
+import com.rotatsulabs.axolotl.core.playback.util.subStringX
 import com.rotatsulabs.axolotl.ui.theme.AxolotlTheme
 import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
 import com.rotatsulabs.axolotl.ui.theme.isFlamingoInDarkMode

@@ -106,22 +106,22 @@ import dev.chrisbanes.haze.materials.HazeMaterials
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import uk.akane.libphonograph.hasScopedStorageWithMediaTypes
-import com.rotatsulabs.axolotl.code.MediaController
-import com.rotatsulabs.axolotl.code.utils.others.Vibrator
-import com.rotatsulabs.axolotl.code.utils.player.FadeExo.fadePause
-import com.rotatsulabs.axolotl.code.utils.player.FadeExo.fadePlay
-import com.rotatsulabs.axolotl.data.libraries.MusicLibrary
-import com.rotatsulabs.axolotl.data.libraries.SettingsLibrary
-import com.rotatsulabs.axolotl.data.libraries.defaultTitle
-import com.rotatsulabs.axolotl.data.models.ImageViewModel
-import com.rotatsulabs.axolotl.data.models.MainViewModel
-import com.rotatsulabs.axolotl.data.models.MediaViewModel
-import com.rotatsulabs.axolotl.data.objects.MediaViewModelObject
-import com.rotatsulabs.axolotl.ui.UI
-import com.rotatsulabs.axolotl.ui.UI.Settings.Companion.ExoplayerSetting
-import com.rotatsulabs.axolotl.ui.pages.HomeNav
-import com.rotatsulabs.axolotl.ui.pages.NowPlaying
-import com.rotatsulabs.axolotl.ui.pages.NowPlayingPage.Album
+import com.rotatsulabs.axolotl.core.playback.MediaController
+import com.rotatsulabs.axolotl.core.playback.util.Vibrator
+import com.rotatsulabs.axolotl.core.playback.player.FadeExo.fadePause
+import com.rotatsulabs.axolotl.core.playback.player.FadeExo.fadePlay
+import com.rotatsulabs.axolotl.core.data.library.MusicLibrary
+import com.rotatsulabs.axolotl.core.data.settings.SettingsLibrary
+import com.rotatsulabs.axolotl.core.data.model.defaultTitle
+import com.rotatsulabs.axolotl.core.data.viewmodel.ImageViewModel
+import com.rotatsulabs.axolotl.core.data.viewmodel.MainViewModel
+import com.rotatsulabs.axolotl.core.data.viewmodel.MediaViewModel
+import com.rotatsulabs.axolotl.core.data.state.MediaViewModelObject
+import com.rotatsulabs.axolotl.ui.navigation.UI
+import com.rotatsulabs.axolotl.ui.navigation.UI.Settings.Companion.ExoplayerSetting
+import com.rotatsulabs.axolotl.ui.pages.home.HomeNav
+import com.rotatsulabs.axolotl.ui.pages.nowplaying.NowPlaying
+import com.rotatsulabs.axolotl.ui.pages.nowplaying.NowPlayingPage.Album
 import com.rotatsulabs.axolotl.ui.pages.library.Library
 import com.rotatsulabs.axolotl.ui.pages.library.NormalMusic
 import com.rotatsulabs.axolotl.ui.pages.library.albums.AlbumInfo
@@ -129,9 +129,9 @@ import com.rotatsulabs.axolotl.ui.pages.library.albums.LocalAlbums
 import com.rotatsulabs.axolotl.ui.pages.library.artists.LocalArtists
 import com.rotatsulabs.axolotl.ui.pages.library.playlists.PlayLists
 import com.rotatsulabs.axolotl.ui.pages.settings.Settings
-import com.rotatsulabs.axolotl.ui.pages.settings.audio.exoPlayer.ExoPlayerSettings
-import com.rotatsulabs.axolotl.ui.pages.settings.audio.exoPlayer.MediaCodec
-import com.rotatsulabs.axolotl.ui.pages.settings.extend.statusBarLyric.LyricGetter
+import com.rotatsulabs.axolotl.ui.pages.settings.audio.exoplayer.ExoPlayerSettings
+import com.rotatsulabs.axolotl.ui.pages.settings.audio.exoplayer.MediaCodec
+import com.rotatsulabs.axolotl.ui.pages.settings.extend.statusbarlyric.LyricGetter
 import com.rotatsulabs.axolotl.ui.pages.settings.library.LibraryOverview
 import com.rotatsulabs.axolotl.ui.pages.settings.others.About
 import com.rotatsulabs.axolotl.ui.pages.settings.performance.LyricSetting
@@ -151,7 +151,7 @@ import java.io.File
 import kotlin.math.abs
 
 /*//MediaPlayer全局控制器
-var mediaController = com.rotatsulabs.axolotl.code.MediaController*/
+var mediaController = com.rotatsulabs.axolotl.core.playback.MediaController*/
 
 class MainActivity : BaseActivity() {
 

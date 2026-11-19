@@ -42,9 +42,9 @@ import com.flaviofaria.kenburnsview.RandomTransitionGenerator
 import com.google.android.renderscript.Toolkit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import com.rotatsulabs.axolotl.code.utils.others.BitmapResolver
-import com.rotatsulabs.axolotl.data.libraries.SettingsLibrary.NowplayingBackgroundEffect
-import com.rotatsulabs.axolotl.ui.pages.NowPlayingPage
+import com.rotatsulabs.axolotl.core.playback.util.BitmapResolver
+import com.rotatsulabs.axolotl.core.data.settings.SettingsLibrary.NowplayingBackgroundEffect
+import com.rotatsulabs.axolotl.ui.pages.nowplaying.NowPlayingPage
 import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
 
 @Stable

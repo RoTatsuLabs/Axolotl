@@ -41,8 +41,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rotatsulabs.axolotl.code.utils.others.Vibrator
-import com.rotatsulabs.axolotl.data.libraries.SettingsLibrary
+import com.rotatsulabs.axolotl.core.playback.util.Vibrator
+import com.rotatsulabs.axolotl.core.data.settings.SettingsLibrary
 import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
 import com.rotatsulabs.axolotl.ui.theme.withNight
 

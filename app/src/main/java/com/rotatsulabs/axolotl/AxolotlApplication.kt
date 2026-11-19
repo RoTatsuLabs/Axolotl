@@ -15,14 +15,14 @@ import com.tencent.mmkv.MMKV
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import com.rotatsulabs.axolotl.code.MediaController.mediaControl
-import com.rotatsulabs.axolotl.code.MediaController.playingMusicList
-import com.rotatsulabs.axolotl.code.PlaybackService
-import com.rotatsulabs.axolotl.data.libraries.Folder
-import com.rotatsulabs.axolotl.data.libraries.MusicLibrary
-import com.rotatsulabs.axolotl.data.libraries.PlayList
-import com.rotatsulabs.axolotl.data.libraries.Song
-import com.rotatsulabs.axolotl.data.libraries.StringWrapper
+import com.rotatsulabs.axolotl.core.playback.MediaController.mediaControl
+import com.rotatsulabs.axolotl.core.playback.MediaController.playingMusicList
+import com.rotatsulabs.axolotl.core.playback.PlaybackService
+import com.rotatsulabs.axolotl.core.data.library.Folder
+import com.rotatsulabs.axolotl.core.data.library.MusicLibrary
+import com.rotatsulabs.axolotl.core.data.library.PlayList
+import com.rotatsulabs.axolotl.core.data.library.Song
+import com.rotatsulabs.axolotl.core.data.library.StringWrapper
 import kotlin.system.exitProcess
 
 class AxolotlApplication : Application() {
@@ -105,7 +105,7 @@ class AxolotlApplication : Application() {
                             }*/
 
                             if (playStatusData.music != null) {
-                                com.rotatsulabs.axolotl.code.MediaController.prepare(
+                                com.rotatsulabs.axolotl.core.playback.MediaController.prepare(
                                     playStatusData.music,
                                     playListData.playingMusicList!!,
                                     playStatusData.position,

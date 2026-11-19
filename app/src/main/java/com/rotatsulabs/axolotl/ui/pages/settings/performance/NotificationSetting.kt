@@ -7,10 +7,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.rotatsulabs.axolotl.R
-import com.rotatsulabs.axolotl.code.MediaController
-import com.rotatsulabs.axolotl.code.MediaController.mediaControl
-import com.rotatsulabs.axolotl.code.PlaybackService
-import com.rotatsulabs.axolotl.data.libraries.SettingsLibrary
+import com.rotatsulabs.axolotl.core.playback.MediaController
+import com.rotatsulabs.axolotl.core.playback.MediaController.mediaControl
+import com.rotatsulabs.axolotl.core.playback.PlaybackService
+import com.rotatsulabs.axolotl.core.data.settings.SettingsLibrary
 import com.rotatsulabs.axolotl.ui.pages.settings.GroupSpacer
 import com.rotatsulabs.axolotl.ui.pages.settings.ListHeader
 import com.rotatsulabs.axolotl.ui.pages.settings.SettingBackground

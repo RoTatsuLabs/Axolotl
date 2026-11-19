@@ -49,7 +49,7 @@
             android:exported="false" />
 
         <service
-            android:name=".code.PlaybackService"
+            android:name=".core.playback.PlaybackService"
             android:foregroundServiceType="mediaPlayback"
             android:exported="true"
             android:permission="android.permission.FOREGROUND_SERVICE">

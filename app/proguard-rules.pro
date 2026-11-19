@@ -29,7 +29,7 @@
 # -keep class com.rotatsulabs.axolotl.data.libraries.MusicLibrary { *; }
 # -keep class com.rotatsulabs.axolotl.data.libraries.PlayListBean { *; }
 # -keep class com.rotatsulabs.axolotl.data.libraries.Folder { *; }
--keepnames class com.rotatsulabs.axolotl.data.libraries.** { *; }
+-keepnames class com.rotatsulabs.axolotl.core.data.library.** { *; }
 
 -keepattributes Signature
 -keep class com.google.gson.reflect.TypeToken { *; }

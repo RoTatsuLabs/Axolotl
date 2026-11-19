@@ -45,16 +45,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import com.rotatsulabs.axolotl.R
-import com.rotatsulabs.axolotl.data.libraries.FavPlayListLibrary
-import com.rotatsulabs.axolotl.data.libraries.MusicLibrary.songs
-import com.rotatsulabs.axolotl.data.libraries.PlayList
-import com.rotatsulabs.axolotl.data.libraries.PlayListLibrary.playList
-import com.rotatsulabs.axolotl.data.libraries.Song
-import com.rotatsulabs.axolotl.data.objects.LibraryObject
-import com.rotatsulabs.axolotl.ui.UI
+import com.rotatsulabs.axolotl.core.data.library.FavPlayListLibrary
+import com.rotatsulabs.axolotl.core.data.library.MusicLibrary.songs
+import com.rotatsulabs.axolotl.core.data.library.PlayList
+import com.rotatsulabs.axolotl.core.data.library.PlayListLibrary.playList
+import com.rotatsulabs.axolotl.core.data.library.Song
+import com.rotatsulabs.axolotl.core.data.state.LibraryObject
+import com.rotatsulabs.axolotl.ui.navigation.UI
 import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
 import com.rotatsulabs.axolotl.ui.theme.withNight
-import com.rotatsulabs.axolotl.ui.toUI
+import com.rotatsulabs.axolotl.ui.navigation.toUI
 import com.rotatsulabs.axolotl.ui.widgets.basic.Title
 
 @Composable

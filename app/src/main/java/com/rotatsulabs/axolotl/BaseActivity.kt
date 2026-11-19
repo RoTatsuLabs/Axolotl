@@ -6,8 +6,8 @@ import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import com.tencent.mmkv.MMKV
-import com.rotatsulabs.axolotl.data.models.MainViewModel
-import com.rotatsulabs.axolotl.data.models.MediaViewModel
+import com.rotatsulabs.axolotl.core.data.viewmodel.MainViewModel
+import com.rotatsulabs.axolotl.core.data.viewmodel.MediaViewModel
 
 abstract class BaseActivity : ComponentActivity() /*{
     override fun onCreate(savedInstanceState: Bundle?) {

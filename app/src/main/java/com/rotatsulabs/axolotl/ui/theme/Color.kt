@@ -3,7 +3,7 @@ package com.rotatsulabs.axolotl.ui.theme
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import com.rotatsulabs.axolotl.data.libraries.SettingsLibrary
+import com.rotatsulabs.axolotl.core.data.settings.SettingsLibrary
 
 val primary = Color(0xFFF54047)
 val primaryDark = Color(0xFFE64366)

@@ -30,8 +30,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rotatsulabs.axolotl.R
-import com.rotatsulabs.axolotl.code.MediaController.musicPlaying
-import com.rotatsulabs.axolotl.data.objects.MediaViewModelObject
+import com.rotatsulabs.axolotl.core.playback.MediaController.musicPlaying
+import com.rotatsulabs.axolotl.core.data.state.MediaViewModelObject
 import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
 import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
 import com.rotatsulabs.axolotl.ui.widgets.effects.overlayEffect

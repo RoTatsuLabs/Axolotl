@@ -18,11 +18,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import com.rotatsulabs.axolotl.R
-import com.rotatsulabs.axolotl.code.MediaController
-import com.rotatsulabs.axolotl.data.libraries.MusicLibrary
-import com.rotatsulabs.axolotl.data.libraries.SettingsLibrary
-import com.rotatsulabs.axolotl.ui.UI
-import com.rotatsulabs.axolotl.ui.toUI
+import com.rotatsulabs.axolotl.core.playback.MediaController
+import com.rotatsulabs.axolotl.core.data.library.MusicLibrary
+import com.rotatsulabs.axolotl.core.data.settings.SettingsLibrary
+import com.rotatsulabs.axolotl.ui.navigation.UI
+import com.rotatsulabs.axolotl.ui.navigation.toUI
 import com.rotatsulabs.axolotl.ui.widgets.basic.RoundColumn
 import com.rotatsulabs.axolotl.ui.widgets.basic.Title
 
