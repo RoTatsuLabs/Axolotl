@@ -41,16 +41,16 @@ import com.blankj.utilcode.util.DeviceUtils
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.rotatsulabs.axolotl.core.playback.util.subStringX
-import com.rotatsulabs.axolotl.ui.theme.AxolotlTheme
-import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
-import com.rotatsulabs.axolotl.ui.theme.isAxolotlInDarkMode
-import com.rotatsulabs.axolotl.ui.theme.withNight
-import com.rotatsulabs.axolotl.ui.widgets.basic.Title
+import com.rotatsulabs.axolotl.core.ui.theme.AxolotlTheme
+import com.rotatsulabs.axolotl.core.ui.theme.SmoothRoundedCornerShape
+import com.rotatsulabs.axolotl.core.ui.theme.isAxolotlInDarkMode
+import com.rotatsulabs.axolotl.core.ui.theme.withNight
+import com.rotatsulabs.axolotl.core.ui.widgets.basic.Title
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import com.rotatsulabs.axolotl.ui.R as UiR
+import com.rotatsulabs.axolotl.core.R as CoreR
 
 class CrashActivity : ComponentActivity() {
     companion object {
@@ -100,7 +100,7 @@ class CrashActivity : ComponentActivity() {
 
         @Composable
     fun CrashUI(context: Activity, crashInfo: String, onRestart: () -> Unit) {
-        val toast = stringResource(UiR.string.tip_copied)
+        val toast = stringResource(CoreR.string.tip_copied)
         //val result = BarUtils.getStatusBarHeight()
         Column(Modifier.fillMaxSize()) {
             //Spacer(modifier = Modifier.height((result / context.resources.displayMetrics.density + 0.5f).dp))
@@ -110,8 +110,8 @@ class CrashActivity : ComponentActivity() {
                     .weight(1f)
             ) {
                 Title(
-                    title = stringResource(UiR.string.crash_title),
-                    subTitle = "Σ(っ °Д °;)っ " + stringResource(UiR.string.crash_subtitle),
+                    title = stringResource(CoreR.string.crash_title),
+                    subTitle = "Σ(っ °Д °;)っ " + stringResource(CoreR.string.crash_subtitle),
                     onBack = {
                         //返回，也就是退出整个软件
                         context.finish()
@@ -190,7 +190,7 @@ class CrashActivity : ComponentActivity() {
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = stringResource(UiR.string.crash_copy_details),
+                        text = stringResource(CoreR.string.crash_copy_details),
                         color = Color.White,
                         fontWeight = FontWeight.Bold
                     )
@@ -226,7 +226,7 @@ class CrashActivity : ComponentActivity() {
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = stringResource(UiR.string.crash_copy_brief),
+                        text = stringResource(CoreR.string.crash_copy_brief),
                         style = TextStyle(
                             brush = Brush.linearGradient(
                                 colors = listOf(
@@ -254,7 +254,7 @@ class CrashActivity : ComponentActivity() {
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = stringResource(UiR.string.crash_restart_app),
+                        text = stringResource(CoreR.string.crash_restart_app),
                         style = TextStyle(
                             brush = Brush.linearGradient(
                                 colors = listOf(

@@ -25,6 +25,4 @@ dependencyResolutionManagement {
 rootProject.name = "Axolotl"
 include ':app'
 include ':overscroll_core'
-include ':core:data'
-include ':core:playback'
-include ':ui'
+include ':core'

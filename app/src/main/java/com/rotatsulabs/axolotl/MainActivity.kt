@@ -117,39 +117,39 @@ import com.rotatsulabs.axolotl.core.data.viewmodel.ImageViewModel
 import com.rotatsulabs.axolotl.core.data.viewmodel.MainViewModel
 import com.rotatsulabs.axolotl.core.data.viewmodel.MediaViewModel
 import com.rotatsulabs.axolotl.core.data.state.MediaViewModelObject
-import com.rotatsulabs.axolotl.ui.navigation.UI
-import com.rotatsulabs.axolotl.ui.navigation.UI.Settings.Companion.ExoplayerSetting
-import com.rotatsulabs.axolotl.ui.pages.home.HomeNav
-import com.rotatsulabs.axolotl.ui.pages.nowplaying.NowPlaying
-import com.rotatsulabs.axolotl.ui.pages.nowplaying.NowPlayingPage.Album
-import com.rotatsulabs.axolotl.ui.pages.library.Library
-import com.rotatsulabs.axolotl.ui.pages.library.NormalMusic
-import com.rotatsulabs.axolotl.ui.pages.library.albums.AlbumInfo
-import com.rotatsulabs.axolotl.ui.pages.library.albums.LocalAlbums
-import com.rotatsulabs.axolotl.ui.pages.library.artists.LocalArtists
-import com.rotatsulabs.axolotl.ui.pages.library.playlists.PlayLists
-import com.rotatsulabs.axolotl.ui.pages.settings.Settings
-import com.rotatsulabs.axolotl.ui.pages.settings.audio.exoplayer.ExoPlayerSettings
-import com.rotatsulabs.axolotl.ui.pages.settings.audio.exoplayer.MediaCodec
-import com.rotatsulabs.axolotl.ui.pages.settings.extend.statusbarlyric.LyricGetter
-import com.rotatsulabs.axolotl.ui.pages.settings.library.LibraryOverview
-import com.rotatsulabs.axolotl.ui.pages.settings.others.About
-import com.rotatsulabs.axolotl.ui.pages.settings.performance.LyricSetting
-import com.rotatsulabs.axolotl.ui.pages.settings.performance.NotificationSetting
-import com.rotatsulabs.axolotl.ui.pages.settings.performance.userinterface.ScreenCornerSetDialog
-import com.rotatsulabs.axolotl.ui.pages.settings.performance.userinterface.UserInterfaceSetting
-import com.rotatsulabs.axolotl.ui.theme.AxolotlTheme
-import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
-import com.rotatsulabs.axolotl.ui.theme.isAxolotlInDarkMode
-import com.rotatsulabs.axolotl.ui.theme.withNight
-import com.rotatsulabs.axolotl.ui.widgets.basic.BottomNavigator
-import com.rotatsulabs.axolotl.ui.widgets.basic.ImageQuality
-import com.rotatsulabs.axolotl.ui.widgets.basic.NavItem
-import com.rotatsulabs.axolotl.ui.widgets.basic.ShadowImageWithCache
-import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
+import com.rotatsulabs.axolotl.core.ui.navigation.UI
+import com.rotatsulabs.axolotl.core.ui.navigation.UI.Settings.Companion.ExoplayerSetting
+import com.rotatsulabs.axolotl.core.ui.pages.home.HomeNav
+import com.rotatsulabs.axolotl.core.ui.pages.nowplaying.NowPlaying
+import com.rotatsulabs.axolotl.core.ui.pages.nowplaying.NowPlayingPage.Album
+import com.rotatsulabs.axolotl.core.ui.pages.library.Library
+import com.rotatsulabs.axolotl.core.ui.pages.library.NormalMusic
+import com.rotatsulabs.axolotl.core.ui.pages.library.albums.AlbumInfo
+import com.rotatsulabs.axolotl.core.ui.pages.library.albums.LocalAlbums
+import com.rotatsulabs.axolotl.core.ui.pages.library.artists.LocalArtists
+import com.rotatsulabs.axolotl.core.ui.pages.library.playlists.PlayLists
+import com.rotatsulabs.axolotl.core.ui.pages.settings.Settings
+import com.rotatsulabs.axolotl.core.ui.pages.settings.audio.exoplayer.ExoPlayerSettings
+import com.rotatsulabs.axolotl.core.ui.pages.settings.audio.exoplayer.MediaCodec
+import com.rotatsulabs.axolotl.core.ui.pages.settings.extend.statusbarlyric.LyricGetter
+import com.rotatsulabs.axolotl.core.ui.pages.settings.library.LibraryOverview
+import com.rotatsulabs.axolotl.core.ui.pages.settings.others.About
+import com.rotatsulabs.axolotl.core.ui.pages.settings.performance.LyricSetting
+import com.rotatsulabs.axolotl.core.ui.pages.settings.performance.NotificationSetting
+import com.rotatsulabs.axolotl.core.ui.pages.settings.performance.userinterface.ScreenCornerSetDialog
+import com.rotatsulabs.axolotl.core.ui.pages.settings.performance.userinterface.UserInterfaceSetting
+import com.rotatsulabs.axolotl.core.ui.theme.AxolotlTheme
+import com.rotatsulabs.axolotl.core.ui.theme.SmoothRoundedCornerShape
+import com.rotatsulabs.axolotl.core.ui.theme.isAxolotlInDarkMode
+import com.rotatsulabs.axolotl.core.ui.theme.withNight
+import com.rotatsulabs.axolotl.core.ui.widgets.basic.BottomNavigator
+import com.rotatsulabs.axolotl.core.ui.widgets.basic.ImageQuality
+import com.rotatsulabs.axolotl.core.ui.widgets.basic.NavItem
+import com.rotatsulabs.axolotl.core.ui.widgets.basic.ShadowImageWithCache
+import com.rotatsulabs.axolotl.core.ui.widgets.basic.KeyedContent
 import java.io.File
 import kotlin.math.abs
-import com.rotatsulabs.axolotl.ui.R as UiR
+import com.rotatsulabs.axolotl.core.R as CoreR
 
 /*//MediaPlayer全局控制器
 var mediaController = com.rotatsulabs.axolotl.core.playback.MediaController*/
@@ -301,7 +301,7 @@ class MainActivity : BaseActivity() {
                         }
 
                         // 导航区域
-                        val defaultHome = stringResource(id = UiR.string.page_home_title)
+                        val defaultHome = stringResource(id = CoreR.string.page_home_title)
 
                         val nowLabel = rememberSaveable(key = "MainActivity_nowLabel") {
                             mutableStateOf(defaultHome)
@@ -585,9 +585,9 @@ class MainActivity : BaseActivity() {
                                                 nowLabel.value = it
 
                                                 val home =
-                                                    context.getString(UiR.string.page_home_title)
+                                                    context.getString(CoreR.string.page_home_title)
                                                 val library =
-                                                    context.getString(UiR.string.page_library_title)
+                                                    context.getString(CoreR.string.page_library_title)
                                                 if (route.value == UI.HomePage) {
                                                     scope.launch {
                                                         pagerState.animateScrollToPage(
@@ -616,12 +616,12 @@ class MainActivity : BaseActivity() {
                                             },
                                             items = listOf(
                                                 NavItem(
-                                                    stringResource(id = UiR.string.page_home_title),
-                                                    UiR.drawable.axolotl_icon
+                                                    stringResource(id = CoreR.string.page_home_title),
+                                                    CoreR.drawable.axolotl_icon
                                                 ),
                                                 NavItem(
-                                                    stringResource(id = UiR.string.page_library_title),
-                                                    UiR.drawable.ic_uitabbar_library
+                                                    stringResource(id = CoreR.string.page_library_title),
+                                                    CoreR.drawable.ic_uitabbar_library
                                                 )
                                             ),
                                             modifier = Modifier
@@ -981,7 +981,7 @@ class MainActivity : BaseActivity() {
                                                                             if (it) {
                                                                                 Icon(
                                                                                     painterResource(
-                                                                                        id = UiR.drawable.ic_nowplaying_mp_pause
+                                                                                        id = CoreR.drawable.ic_nowplaying_mp_pause
                                                                                     ),
                                                                                     contentDescription = "Pause",
                                                                                     modifier = Modifier
@@ -991,7 +991,7 @@ class MainActivity : BaseActivity() {
                                                                             } else {
                                                                                 Icon(
                                                                                     painterResource(
-                                                                                        id = UiR.drawable.ic_nowplaying_mp_play
+                                                                                        id = CoreR.drawable.ic_nowplaying_mp_play
                                                                                     ),
                                                                                     contentDescription = "Play",
                                                                                     modifier = Modifier
@@ -1024,7 +1024,7 @@ class MainActivity : BaseActivity() {
                                                                     ) {
                                                                         Icon(
                                                                             painterResource(
-                                                                                id = UiR.drawable.ic_nowplaying_mp_fforward
+                                                                                id = CoreR.drawable.ic_nowplaying_mp_fforward
                                                                             ),
                                                                             contentDescription = "Next",
                                                                             modifier = Modifier
@@ -1148,12 +1148,12 @@ class MainActivity : BaseActivity() {
 
             KeyedContent {
                 OptionDialog(
-                    title = stringResource(id = UiR.string.permission_grant_title),
-                    subTitle = stringResource(id = UiR.string.permission_grant_subtitle),
+                    title = stringResource(id = CoreR.string.permission_grant_title),
+                    subTitle = stringResource(id = CoreR.string.permission_grant_subtitle),
                     content = {
-                        Text(text = stringResource(id = UiR.string.permission_grant_desc))
+                        Text(text = stringResource(id = CoreR.string.permission_grant_desc))
                     },
-                    positiveContent = stringResource(id = UiR.string.permission_grant_button_positive),
+                    positiveContent = stringResource(id = CoreR.string.permission_grant_button_positive),
                     properties = dialogProperties,
                     bottomSheetState = bottomSheetState,
                     onPositive = {
@@ -1168,7 +1168,7 @@ class MainActivity : BaseActivity() {
                             }
                         }
                     },
-                    negativeContent = stringResource(id = UiR.string.permission_grant_button_negative),
+                    negativeContent = stringResource(id = CoreR.string.permission_grant_button_negative),
                     onNegative = {
                         scope.launch { bottomSheetState.hide() }.invokeOnCompletion {
                             if (!bottomSheetState.isVisible) {
