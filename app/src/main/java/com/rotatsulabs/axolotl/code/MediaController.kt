@@ -52,7 +52,7 @@ import com.rotatsulabs.axolotl.code.MediaController.mediaControl
 import com.rotatsulabs.axolotl.code.MediaController.mediaSession
 import com.rotatsulabs.axolotl.code.MediaController.musicPlaying
 import com.rotatsulabs.axolotl.code.MediaController.onServiceRunning
-import com.rotatsulabs.axolotl.code.utils.lrc.YosLrcFactory
+import com.rotatsulabs.axolotl.code.utils.lrc.LyricsFactory
 import com.rotatsulabs.axolotl.code.utils.player.FadeExo
 import com.rotatsulabs.axolotl.code.utils.player.FadeExo.fadePause
 import com.rotatsulabs.axolotl.code.utils.player.FadeExo.fadePlay
@@ -117,9 +117,9 @@ object MediaController {
                             if (isPlaying == true) {
                                 liveTime = mediaControl?.currentPosition ?: 0
 
-                                val lrcEntries = MediaViewModelObject.lrcEntries.value
+                                val lyricEntries = MediaViewModelObject.lyricEntries.value
 
-                                val nextIndex = lrcEntries.indexOfFirst { line ->
+                                val nextIndex = lyricEntries.indexOfFirst { line ->
                                     line.first().first >= liveTime
                                 }
 
@@ -131,7 +131,7 @@ object MediaController {
                                             SettingsLibrary.StatusBarLyricEnabled
 
 
-                                        val line = lrcEntries[currentLyricIndex]
+                                        val line = lyricEntries[currentLyricIndex]
                                         if (line == lastLyric) {
                                             return
                                         }
@@ -168,8 +168,8 @@ object MediaController {
                                     if (currentLyricIndex != -1) {
                                         sendLyric()
                                     }
-                                } else if (currentLyricIndex != lrcEntries.size - 1) {
-                                    currentLyricIndex = lrcEntries.size - 1
+                                } else if (currentLyricIndex != lyricEntries.size - 1) {
+                                    currentLyricIndex = lyricEntries.size - 1
                                     if (currentLyricIndex != -1) {
                                         sendLyric()
                                     }
@@ -473,9 +473,9 @@ class PlaybackService : MediaSessionService() {
 
                         if (tracks.isEmpty) return@runCatching
 
-                        val lrcEntries: MutableState<List<List<Pair<Float, String>>>> =
-                            MediaViewModelObject.lrcEntries
-                        var lrcContent: String? = null
+                        val lyricEntries: MutableState<List<List<Pair<Float, String>>>> =
+                            MediaViewModelObject.lyricEntries
+                        var lyricsContent: String? = null
 
 
                         val path = player.currentMediaItem?.uri
@@ -500,16 +500,16 @@ class PlaybackService : MediaSessionService() {
 
                         val thisPath = path?.path
 
-                        val finalLrcContent = if (lrcContent == null) {
-                            val lrcPath = "${thisPath?.substringBeforeLast(".")}.lrc"
-                            println("获取歌词元数据失败，将读取：$lrcPath")
-                            AudioMetadataUtils.loadLrcFile(this@PlaybackService, lrcPath) ?: ""
+                        val finalLyricsContent = if (lyricsContent == null) {
+                            val lyricsPath = "${thisPath?.substringBeforeLast(".")}.lrc"
+                            println("获取歌词元数据失败，将读取：$lyricsPath")
+                            AudioMetadataUtils.loadLyricsFile(this@PlaybackService, lyricsPath) ?: ""
                         } else {
-                            lrcContent
+                            lyricsContent
                         }
 
-                        val lrcFactory = YosLrcFactory()
-                        lrcEntries.value = lrcFactory.formatLrcEntries(finalLrcContent)
+                        val lyricsFactory = LyricsFactory()
+                        lyricEntries.value = lyricsFactory.formatLyricEntries(finalLyricsContent)
 
                         if (thisPath != null) {
                             // MediaViewModelObject.isDolby.value = thisPath.endsWith(".m4a")

@@ -20,10 +20,10 @@ import androidx.compose.runtime.Stable
  * @param currentSubTextAlpha 当该行次要文本高亮时的文本透明度
  */
 @Stable
-data class YosUIConfig(
+data class LyricUiConfig(
     val edgeFade: Boolean = true,
     val formatText: Boolean = true,
-    val noLrcText: String = "No lyrics",
+    val noLyricsText: String = "No lyrics",
     val blankHeight: Int = 70,
     val mainTextSize: Int = 34,
     val subTextSize: Int = mainTextSize - 18,

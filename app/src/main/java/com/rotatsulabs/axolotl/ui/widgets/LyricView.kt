@@ -95,8 +95,8 @@ import androidx.compose.ui.util.fastForEachIndexed
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
-import com.rotatsulabs.axolotl.code.utils.lrc.YosMediaEvent
-import com.rotatsulabs.axolotl.code.utils.lrc.YosUIConfig
+import com.rotatsulabs.axolotl.code.utils.lrc.LyricMediaEvent
+import com.rotatsulabs.axolotl.code.utils.lrc.LyricUiConfig
 import com.rotatsulabs.axolotl.code.utils.others.Vibrator
 import com.rotatsulabs.axolotl.data.libraries.SettingsLibrary
 import com.rotatsulabs.axolotl.data.objects.MainViewModelObject
@@ -109,7 +109,7 @@ val lyricEasing = CubicBezierEasing(0.75f, 0.0f, 0.25f, 1.0f)
 
 /**
  * LyricView 主控件
- * @param lrcEntriesLambda 处理完毕的 Lrc 文本
+ * @param lyricEntriesLambda 处理完毕的 Lrc 文本
  * @param liveTimeLambda 当前歌曲进度
  * @param mediaEvent LyricView 媒体事件
  * @param translationLambda 是否开启翻译
@@ -119,13 +119,13 @@ val lyricEasing = CubicBezierEasing(0.75f, 0.0f, 0.25f, 1.0f)
 @Composable
 fun LyricView(
     //mediaViewModel: MediaViewModel,
-    lrcEntriesLambda: () -> List<List<Pair<Float, String>>>,
+    lyricEntriesLambda: () -> List<List<Pair<Float, String>>>,
     liveTimeLambda: () -> Int,
-    mediaEvent: YosMediaEvent,
+    mediaEvent: LyricMediaEvent,
     translationLambda: () -> Boolean = { true },
     blurLambda: () -> Boolean = { false },
-    //animationConfig: YosAnimationConfig = YosAnimationConfig(),
-    uiConfig: YosUIConfig = YosUIConfig(),
+    //animationConfig: LyricAnimationConfig = LyricAnimationConfig(),
+    uiConfig: LyricUiConfig = LyricUiConfig(),
     weightLambda: () -> Boolean,
     modifier: Modifier,
     onBackClick: () -> Unit
@@ -137,12 +137,12 @@ fun LyricView(
     //Color(0xFF919191)
     val otherSideForLines = MediaViewModelObject.otherSideForLines
 
-    val lrcEntries = lrcEntriesLambda()
+    val lyricEntries = lyricEntriesLambda()
 
     //val thisLyricLines = MediaViewModelObject.mainLyricLines
-    if (lrcEntries.isEmpty() || otherSideForLines.isEmpty() /*|| thisLyricLines.isEmpty()*/) {
+    if (lyricEntries.isEmpty() || otherSideForLines.isEmpty() /*|| thisLyricLines.isEmpty()*/) {
         println(
-            lrcEntries.isEmpty()
+            lyricEntries.isEmpty()
                 .toString() + otherSideForLines.isEmpty()/* + thisLyricLines.isEmpty()*/
         )
         Box(
@@ -157,7 +157,7 @@ fun LyricView(
                 }
         ) {
             Text(
-                text = uiConfig.noLrcText,
+                text = uiConfig.noLyricsText,
                 fontSize = 18.sp,
                 color = Color(uiConfig.mainTextBasicColor)
             )
@@ -368,7 +368,7 @@ fun LyricView(
                 //println("重组：歌词列表")
                 blankSpacer()
                 itemsIndexed(
-                    items = lrcEntries,
+                    items = lyricEntries,
                     key = { _, lines -> lines }/*,
                 contentType = { _, _ -> "LyricView_item" }*/
                 ) { index, lines ->
@@ -439,10 +439,10 @@ fun LyricView(
                                 measurer = measurer,
                                 isLyricEmpty = { isLyricEmpty.value },
                                 nextTime = {
-                                    if (index + 1 > lrcEntries.size - 1) {
+                                    if (index + 1 > lyricEntries.size - 1) {
                                         0f
                                     } else {
-                                        lrcEntries[(index + 1)].first().first
+                                        lyricEntries[(index + 1)].first().first
                                     }
                                 }
                             ) {
@@ -570,11 +570,11 @@ fun LyricView(
                             try {
                                 if (currentLyricIndex.intValue - 1 < 0) false
                                 else (
-                                        (lrcEntries[(currentLyricIndex.intValue - 1)][1].second.isBlank())
+                                        (lyricEntries[(currentLyricIndex.intValue - 1)][1].second.isBlank())
                                         /*&&
-                                        (lrcEntries[(currentLyricIndex.intValue).coerceAtLeast(
+                                        (lyricEntries[(currentLyricIndex.intValue).coerceAtLeast(
                                             0
-                                        )].first().first - lrcEntries[(currentLyricIndex.intValue - 1)].first().first > 900f)*/)
+                                        )].first().first - lyricEntries[(currentLyricIndex.intValue - 1)].first().first > 900f)*/)
                                 // 这里有一个特殊的更改，因为AppleMusic歌词转过来会有两个连续一样的时间轴，在LrcFactory有更改，下面的那个900不用管
                                 // 已经作了规范处理
 
@@ -625,14 +625,14 @@ fun LyricView(
             LaunchedEffect(Unit) {
                 while (true) {
                     val liveTime = liveTimeLambda()
-                    val nextIndex = lrcEntries.indexOfFirst { line ->
+                    val nextIndex = lyricEntries.indexOfFirst { line ->
                         line.first().first > liveTime
                     }
 
                     if (nextIndex != -1 && nextIndex - 1 != currentLyricIndex.intValue) {
                         currentLyricIndex.intValue = nextIndex - 1
-                    } else if (nextIndex == -1 && currentLyricIndex.intValue != lrcEntries.size - 1) {
-                        currentLyricIndex.intValue = lrcEntries.size - 1
+                    } else if (nextIndex == -1 && currentLyricIndex.intValue != lyricEntries.size - 1) {
+                        currentLyricIndex.intValue = lyricEntries.size - 1
                     }
 
                     delay(100)
@@ -651,7 +651,7 @@ fun LyricView(
                         return@LaunchedEffect
                     }
                     val liveTime = liveTimeLambda()
-                    val nextIndex = lrcEntries.indexOfFirst { line ->
+                    val nextIndex = lyricEntries.indexOfFirst { line ->
                         line.first().first > liveTime
                     }
 
@@ -661,12 +661,12 @@ fun LyricView(
                             scrollOffset = -targetOffset.toInt()
                         )
                         currentLyricIndex.intValue = nextIndex - 1
-                    } else if (nextIndex == -1 && currentLyricIndex.intValue != lrcEntries.size - 1) {
+                    } else if (nextIndex == -1 && currentLyricIndex.intValue != lyricEntries.size - 1) {
                         scrollState.scrollToItem(
-                            index = (lrcEntries.size).coerceAtLeast(0),
+                            index = (lyricEntries.size).coerceAtLeast(0),
                             scrollOffset = -targetOffset.toInt()
                         )
-                        currentLyricIndex.intValue = lrcEntries.size - 1
+                        currentLyricIndex.intValue = lyricEntries.size - 1
                     }
                 } catch (_: Exception) {
                 }

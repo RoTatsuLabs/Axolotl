@@ -10,6 +10,6 @@ import androidx.compose.runtime.Stable
  * @param ignoreSystemAnimationScale 是否忽略系统设置的 Animator 动画时长。注意此项有严重的兼容性问题，建议保持默认设置
  */
 @Stable
-data class YosAnimationConfig(
+data class LyricAnimationConfig(
     val ignoreSystemAnimationScale: Boolean = false
 )

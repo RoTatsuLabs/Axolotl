@@ -11,7 +11,7 @@ import java.io.File
 import java.nio.charset.Charset
 
 object AudioMetadataUtils {
-    fun loadLrcFile(context: Context, filePath: String): String? {
+    fun loadLyricsFile(context: Context, filePath: String): String? {
         return try {
             val file = File(filePath)
             val uri = Uri.fromFile(file)

@@ -8,14 +8,14 @@ import com.rotatsulabs.axolotl.data.objects.MediaViewModelObject
 /**
  * Lrc 歌词文本处理
  */
-class YosLrcFactory(private val formatText: Boolean = true) {
+class LyricsFactory(private val formatText: Boolean = true) {
     /**
      * Lrc 歌词文本处理方法
-     * @param lrcText Lrc 格式的文本
+     * @param lyricsText Lrc 格式的文本
      */
-    /*fun formatLrcEntries(lrcText: String): List<Pair<Float, String>> {
-        val lrcLines = lrcText.lines()
-        return lrcLines.mapNotNull { line ->
+    /*fun formatLyricEntries(lyricsText: String): List<Pair<Float, String>> {
+        val lyricLines = lyricsText.lines()
+        return lyricLines.mapNotNull { line ->
             val timeIndex = line.indexOf("]")
             if (timeIndex == -1) return@mapNotNull null
             val timeText = line.substring(1, timeIndex)
@@ -29,10 +29,10 @@ class YosLrcFactory(private val formatText: Boolean = true) {
             time to if (formatText) lyric.replace(Regex("(?!\\n)\\s+"), " ").trim() else lyric
         }
     }*/
-    fun formatLrcEntries(lrcText: String): List<List<Pair<Float, String>>> {
-        val lrcLines = lrcText.lines()
+    fun formatLyricEntries(lyricsText: String): List<List<Pair<Float, String>>> {
+        val lyricLines = lyricsText.lines()
         val timeLyricPairs = mutableListOf<MutableList<Pair<Float, String>>>()
-        lrcLines.fastForEachIndexed { index, line ->
+        lyricLines.fastForEachIndexed { index, line ->
             //将文本中完全相同而且重复的两个时间轴修改为一个
             //比如[12:34.56][12:34.56]改为[12:34.56]
             var remainingLine =
@@ -72,8 +72,8 @@ class YosLrcFactory(private val formatText: Boolean = true) {
                         .isBlank() && remainingLine.substring(0, timeIndex).isBlank()
                 ) {
                     // 检查下一行的时间差
-                    if (index + 1 < lrcLines.size) {
-                        val nextLine = lrcLines[index + 1]
+                    if (index + 1 < lyricLines.size) {
+                        val nextLine = lyricLines[index + 1]
                         val nextTimeIndex = nextLine.indexOf("[")
                         val nextTimeAfter = nextLine.indexOf("]")
                         if (nextTimeIndex != -1 && nextTimeAfter != -1) {
@@ -144,14 +144,14 @@ class YosLrcFactory(private val formatText: Boolean = true) {
         return processedEntries.filter { it.isNotEmpty() }
     }
 
-    private fun processOtherSide(lrcEntries: List<List<Pair<Float, String>>>): List<List<Pair<Float, String>>> {
+    private fun processOtherSide(lyricEntries: List<List<Pair<Float, String>>>): List<List<Pair<Float, String>>> {
         // 对唱处理
         val otherSideResult = mutableStateListOf<Boolean>()
         var otherSide = false
         var lastSinger: String? = null
         var otherSideFirstTime = false
 
-        val filteredLrcEntries = lrcEntries.map { lines ->
+        val filteredLyricEntries = lyricEntries.map { lines ->
             val lyric = lines.fastJoinToString(separator = "", transform = {
                 it.second
             })
@@ -197,8 +197,8 @@ class YosLrcFactory(private val formatText: Boolean = true) {
         MediaViewModelObject.otherSideForLines.addAll(otherSideResult)
         //println(MediaViewModelObject.otherSideForLines)
 
-        //println(filteredLrcEntries)
-        return filteredLrcEntries
+        //println(filteredLyricEntries)
+        return filteredLyricEntries
     }
 }
 

@@ -134,8 +134,8 @@ import com.rotatsulabs.axolotl.code.MediaController.playingMusicList
 import com.rotatsulabs.axolotl.code.SystemMediaControlResolver
 import com.rotatsulabs.axolotl.code.VolumeChangeReceiver
 import com.rotatsulabs.axolotl.code.PlaybackService
-import com.rotatsulabs.axolotl.code.utils.lrc.YosMediaEvent
-import com.rotatsulabs.axolotl.code.utils.lrc.YosUIConfig
+import com.rotatsulabs.axolotl.code.utils.lrc.LyricMediaEvent
+import com.rotatsulabs.axolotl.code.utils.lrc.LyricUiConfig
 import com.rotatsulabs.axolotl.code.utils.others.Vibrator
 import com.rotatsulabs.axolotl.code.utils.player.FadeExo.fadePause
 import com.rotatsulabs.axolotl.code.utils.player.FadeExo.fadePlay
@@ -210,8 +210,8 @@ fun NowPlaying(
     ) {
         val context = LocalContext.current
 
-        val lrcEntries: MutableState<List<List<Pair<Float, String>>>> =
-            MediaViewModelObject.lrcEntries
+        val lyricEntries: MutableState<List<List<Pair<Float, String>>>> =
+            MediaViewModelObject.lyricEntries
         val bitmap: MutableState<Uri?> = MediaViewModelObject.bitmap
 
         val thisMusicPlaying = remember("NowPlaying_thisMusicPlaying") {
@@ -331,7 +331,7 @@ fun NowPlaying(
                     println("重组：LyricView 外层 3")
 
                     Lyric(
-                        lrcEntries = { lrcEntries.value },
+                        lyricEntries = { lyricEntries.value },
                         weightLambda = { showControl.value },
                         translationLambda = { translation.value },
                         onBackClick = {
@@ -1064,7 +1064,7 @@ private fun LazyItemScope.SmallMusicListItem(music: Song, itemClick: () -> Unit)
 
 @Composable
 private fun Lyric(
-    lrcEntries: () -> List<List<Pair<Float, String>>>,
+    lyricEntries: () -> List<List<Pair<Float, String>>>,
     weightLambda: () -> Boolean,
     translationLambda: () -> Boolean,
     mainViewModel: MainViewModel,
@@ -1088,11 +1088,11 @@ private fun Lyric(
 
             LyricView(
                 //mediaViewModel = mediaViewModel,
-                lrcEntriesLambda = lrcEntries,
+                lyricEntriesLambda = lyricEntries,
                 liveTimeLambda = {
                     (mediaControl?.currentPosition ?: 0).toInt()
                 },
-                mediaEvent = object : YosMediaEvent {
+                mediaEvent = object : LyricMediaEvent {
                     override fun onSeek(position: Int) {
                         mediaControl?.seekTo(position.toLong())
                     }
@@ -1101,8 +1101,8 @@ private fun Lyric(
                 blurLambda = {
                     SettingsLibrary.LyricBlurEffect
                 },
-                uiConfig = YosUIConfig(
-                    noLrcText = stringResource(id = R.string.tip_no_lyrics)
+                uiConfig = LyricUiConfig(
+                    noLyricsText = stringResource(id = R.string.tip_no_lyrics)
                 ),
                 weightLambda = weightLambda,
                 modifier = Modifier.drawWithCache {

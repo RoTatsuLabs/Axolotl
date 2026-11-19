@@ -5,7 +5,7 @@ package com.rotatsulabs.axolotl.code.utils.lrc
  *
  * 之后可能在此接口实现更多其它功能
  */
-interface YosMediaEvent {
+interface LyricMediaEvent {
     /**
      * 进度跳转事件
      * @param position 要跳转到的进度
