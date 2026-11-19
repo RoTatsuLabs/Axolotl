@@ -26,3 +26,4 @@ rootProject.name = "Flamingo"
 include ':app'
 include ':overscroll_core'
 include ':core:data'
+include ':core:playback'

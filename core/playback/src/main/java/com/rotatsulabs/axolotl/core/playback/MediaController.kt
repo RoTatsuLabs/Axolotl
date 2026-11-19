@@ -46,7 +46,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import com.rotatsulabs.axolotl.R
 import com.rotatsulabs.axolotl.core.playback.MediaController.mediaControl
 import com.rotatsulabs.axolotl.core.playback.MediaController.mediaSession
 import com.rotatsulabs.axolotl.core.playback.MediaController.musicPlaying
@@ -67,6 +66,7 @@ import com.rotatsulabs.axolotl.core.data.state.MainViewModelObject
 import com.rotatsulabs.axolotl.core.data.state.MediaViewModelObject
 import com.rotatsulabs.axolotl.core.playback.player.AppRenderersFactory
 import com.rotatsulabs.axolotl.core.playback.metadata.AudioMetadataUtils
+import com.rotatsulabs.axolotl.core.playback.R
 
 @Stable
 object MediaController {
