@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace 'yos.music.player'
+    namespace 'com.rotatsulabs.axolotl'
     compileSdk 34
 
     defaultConfig {
-        applicationId "yos.music.player"
+        applicationId "com.rotatsulabs.axolotl"
         minSdk 23
         targetSdk 34
         versionCode 1

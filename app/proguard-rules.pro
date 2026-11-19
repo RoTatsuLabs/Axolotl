@@ -23,13 +23,13 @@
 -keep class cn.lyric.getter.api.data.*{*;}
 -keep class cn.lyric.getter.api.API{*;}
 
-# -keep class yos.music.player.data.libraries.Music { *; }
-# -keep class yos.music.player.data.libraries.PlayList { *; }
-# -keep class yos.music.player.data.libraries.PlayStatus { *; }
-# -keep class yos.music.player.data.libraries.MusicLibrary { *; }
-# -keep class yos.music.player.data.libraries.PlayListBean { *; }
-# -keep class yos.music.player.data.libraries.Folder { *; }
--keepnames class yos.music.player.data.libraries.** { *; }
+# -keep class com.rotatsulabs.axolotl.data.libraries.Music { *; }
+# -keep class com.rotatsulabs.axolotl.data.libraries.PlayList { *; }
+# -keep class com.rotatsulabs.axolotl.data.libraries.PlayStatus { *; }
+# -keep class com.rotatsulabs.axolotl.data.libraries.MusicLibrary { *; }
+# -keep class com.rotatsulabs.axolotl.data.libraries.PlayListBean { *; }
+# -keep class com.rotatsulabs.axolotl.data.libraries.Folder { *; }
+-keepnames class com.rotatsulabs.axolotl.data.libraries.** { *; }
 
 -keepattributes Signature
 -keep class com.google.gson.reflect.TypeToken { *; }
