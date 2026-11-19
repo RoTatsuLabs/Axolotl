@@ -38,7 +38,7 @@ dependencies {
     compileOnly files("libs/kenburnsview-1.0.7.aar")
     compileOnly files("libs/renderscript-toolkit-release.aar")
 
-    implementation project(':overscroll_core')
+    implementation project(':overscroll')
 
     api "androidx.compose.foundation:foundation:1.7.0-beta07"
     api 'androidx.compose.material3:material3:1.2.1'
