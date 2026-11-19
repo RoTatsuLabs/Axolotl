@@ -80,8 +80,6 @@ dependencies {
     implementation 'androidx.activity:activity-compose:1.9.1'
 
     implementation "androidx.compose.foundation:foundation:1.7.0-beta07"
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.compose.runtime:runtime-livedata:1.0.0-beta01'
     debugImplementation 'androidx.compose.ui:ui-tooling'
 
     implementation 'androidx.compose.material3:material3:1.2.1'
@@ -111,8 +109,6 @@ dependencies {
     implementation 'com.github.xiaowine:Lyric-Getter-Api:6.0.0'
 
     implementation "com.github.Kyant0:taglib:1.0.0-alpha22"
-
-    implementation "com.google.accompanist:accompanist-pager:0.20.2"
 
     implementation 'androidx.appcompat:appcompat:1.7.0'
 
