@@ -33,10 +33,10 @@ android {
 }
 
 dependencies {
-    compileOnly files("${rootDir}/libs/libPhonograph-release.aar")
-    compileOnly files("${rootDir}/libs/lib-decoder-ffmpeg-release.aar")
-    compileOnly files("${rootDir}/libs/kenburnsview-1.0.7.aar")
-    compileOnly files("${rootDir}/libs/renderscript-toolkit-release.aar")
+    compileOnly files("libs/libPhonograph-release.aar")
+    compileOnly files("libs/lib-decoder-ffmpeg-release.aar")
+    compileOnly files("libs/kenburnsview-1.0.7.aar")
+    compileOnly files("libs/renderscript-toolkit-release.aar")
 
     implementation project(':overscroll_core')
 
