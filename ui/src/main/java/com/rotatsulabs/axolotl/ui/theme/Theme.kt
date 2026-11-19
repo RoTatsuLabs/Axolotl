@@ -38,7 +38,7 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun AxolotlTheme(
-    darkTheme: Boolean = isFlamingoInDarkMode(),
+    darkTheme: Boolean = isAxolotlInDarkMode(),
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {

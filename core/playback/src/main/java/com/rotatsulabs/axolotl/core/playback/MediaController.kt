@@ -92,7 +92,7 @@ object MediaController {
         val handler by lazy { Handler(Looper.getMainLooper()) }
         val lyricAPI by lazy { API() }
         var lastLyric = listOf<Pair<Float, String>>()
-        val base64 = Tools.drawableToBase64(getDrawable(R.drawable.flamingo_icon_notification)!!)
+        val base64 = Tools.drawableToBase64(getDrawable(R.drawable.axolotl_icon_notification)!!)
         var statusBarLyricEnabled: Boolean
         var hooked = false
 
@@ -296,7 +296,7 @@ object MediaController {
 
 class PlaybackService : MediaSessionService() {
     private val notificationID = 1145
-    private val channelID = "YosMediaControllerChannel"
+    private val channelID = "AxolotlMediaControllerChannel"
 
     private val shuffleMode = "shuffle_mode"
     private val repeatMode = "repeat_mode"
@@ -378,9 +378,9 @@ class PlaybackService : MediaSessionService() {
     /*fun sendLyricTicker(lyric: String) {
         val notification = NotificationCompat.Builder(this, channelID).apply {
             setTicker(lyric)
-            setSmallIcon(R.drawable.flamingo_icon_notification)
+            setSmallIcon(R.drawable.axolotl_icon_notification)
         }.build().also {
-            it.extras.putInt("ticker_icon", R.drawable.flamingo_icon_notification)
+            it.extras.putInt("ticker_icon", R.drawable.axolotl_icon_notification)
             it.extras.putBoolean("ticker_icon_switch", true)
             it.flags = it.flags.or(FLAG_ALWAYS_SHOW_TICKER).or(FLAG_ONLY_UPDATE_TICKER)
         }
@@ -695,8 +695,8 @@ class PlaybackService : MediaSessionService() {
         */
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Flamingo Media Control"
-            val descriptionText = "Flamingo Media Control Notification Channel"
+            val name = "Axolotl Media Control"
+            val descriptionText = "Axolotl Media Control Notification Channel"
             val importance = NotificationManager.IMPORTANCE_NONE
             val channel = NotificationChannel(channelID, name, importance).apply {
                 description = descriptionText
@@ -727,7 +727,7 @@ class PlaybackService : MediaSessionService() {
             notificationID
         )*/
 
-        notificationProvider.setSmallIcon(R.drawable.flamingo_icon_notification)
+        notificationProvider.setSmallIcon(R.drawable.axolotl_icon_notification)
 
         this.setMediaNotificationProvider(notificationProvider)
 

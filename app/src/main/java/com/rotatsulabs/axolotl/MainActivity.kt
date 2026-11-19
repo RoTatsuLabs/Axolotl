@@ -140,7 +140,7 @@ import com.rotatsulabs.axolotl.ui.pages.settings.performance.userinterface.Scree
 import com.rotatsulabs.axolotl.ui.pages.settings.performance.userinterface.UserInterfaceSetting
 import com.rotatsulabs.axolotl.ui.theme.AxolotlTheme
 import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
-import com.rotatsulabs.axolotl.ui.theme.isFlamingoInDarkMode
+import com.rotatsulabs.axolotl.ui.theme.isAxolotlInDarkMode
 import com.rotatsulabs.axolotl.ui.theme.withNight
 import com.rotatsulabs.axolotl.ui.widgets.basic.BottomNavigator
 import com.rotatsulabs.axolotl.ui.widgets.basic.ImageQuality
@@ -269,7 +269,7 @@ class MainActivity : BaseActivity() {
                         val hazeState = remember { HazeState() }
 
                         KeyedContent {
-                            val isNight = isFlamingoInDarkMode()
+                            val isNight = isAxolotlInDarkMode()
                             if (showNowPlaying.value) {
                                 rememberSystemUiController().run {
                                     setNavigationBarColor(
@@ -617,7 +617,7 @@ class MainActivity : BaseActivity() {
                                             items = listOf(
                                                 NavItem(
                                                     stringResource(id = UiR.string.page_home_title),
-                                                    UiR.drawable.flamingo_icon
+                                                    UiR.drawable.axolotl_icon
                                                 ),
                                                 NavItem(
                                                     stringResource(id = UiR.string.page_library_title),

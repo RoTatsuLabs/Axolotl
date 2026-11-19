@@ -43,7 +43,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.rotatsulabs.axolotl.core.playback.util.subStringX
 import com.rotatsulabs.axolotl.ui.theme.AxolotlTheme
 import com.rotatsulabs.axolotl.ui.theme.SmoothRoundedCornerShape
-import com.rotatsulabs.axolotl.ui.theme.isFlamingoInDarkMode
+import com.rotatsulabs.axolotl.ui.theme.isAxolotlInDarkMode
 import com.rotatsulabs.axolotl.ui.theme.withNight
 import com.rotatsulabs.axolotl.ui.widgets.basic.Title
 import java.text.DateFormat
@@ -78,7 +78,7 @@ class CrashActivity : ComponentActivity() {
                     color = Color.White withNight Color.Black,
                     contentColor = Color.Black withNight Color.White
                 ) {
-                        val isNight = isFlamingoInDarkMode()
+                        val isNight = isAxolotlInDarkMode()
 
                         rememberSystemUiController().run {
                             setNavigationBarColor(Color.Transparent, darkIcons = !isNight)
