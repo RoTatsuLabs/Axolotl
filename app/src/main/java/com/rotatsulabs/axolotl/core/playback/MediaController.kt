@@ -46,7 +46,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import com.rotatsulabs.axolotl.MainActivity
 import com.rotatsulabs.axolotl.R
 import com.rotatsulabs.axolotl.core.playback.MediaController.mediaControl
 import com.rotatsulabs.axolotl.core.playback.MediaController.mediaSession
@@ -76,7 +75,8 @@ object MediaController {
         get() = MusicLibrary.songs
 
     @Stable
-    var playingMusicList = mutableStateOf<List<Song>?>(null)
+    val playingMusicList
+        get() = MusicLibrary.playingMusicList
 
     @Stable
     var mediaControl: MediaController? = null
@@ -678,7 +678,7 @@ class PlaybackService : MediaSessionService() {
                     PendingIntent.getActivity(
                         this,
                         0,
-                        Intent(this, MainActivity::class.java),
+                        Intent().setClassName(this, "com.rotatsulabs.axolotl.MainActivity"),
                         PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
                     )
                 )

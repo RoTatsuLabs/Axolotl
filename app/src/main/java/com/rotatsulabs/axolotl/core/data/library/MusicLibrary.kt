@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.util.fastMap
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
@@ -22,7 +23,6 @@ import uk.akane.libphonograph.reader.Reader
 import uk.akane.libphonograph.reader.ReaderConfiguration
 import uk.akane.libphonograph.reader.ReaderResult
 import com.rotatsulabs.axolotl.UriTypeAdapter
-import com.rotatsulabs.axolotl.core.playback.MediaController
 import com.rotatsulabs.axolotl.core.data.storage.NormalSaver
 import com.rotatsulabs.axolotl.core.data.storage.SongListSaver
 import com.rotatsulabs.axolotl.core.data.model.thumb
@@ -165,6 +165,9 @@ object MusicLibrary {
     private var songSaver by mutableDataSaverListStateOf(
         dataSaverInterface = SongListSaver, key = "songs", initialValue = listOf<Song>()
     )
+
+    @Stable
+    val playingMusicList = mutableStateOf<List<Song>?>(null)
 
     val songs: List<Song>
         get() = songSaver
@@ -461,8 +464,8 @@ object MusicLibrary {
 
             updatePlayList(
                 PlayListV1(
-                    MediaController.mainMusicList,
-                    MediaController.playingMusicList.value ?: emptyList()
+                    songs,
+                    playingMusicList.value ?: emptyList()
                 )
             )
 
