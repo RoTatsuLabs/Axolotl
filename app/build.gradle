@@ -87,6 +87,7 @@ android {
 dependencies {
     implementation fileTree(include: ["*.*"], dir: "${rootDir}/libs")
     implementation project ":overscroll_core"
+    implementation project ":ui"
     implementation project ":core:playback"
     implementation project ":core:data"
 

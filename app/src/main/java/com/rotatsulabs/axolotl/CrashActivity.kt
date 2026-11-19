@@ -50,6 +50,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.rotatsulabs.axolotl.ui.R as UiR
 
 class CrashActivity : ComponentActivity() {
     companion object {
@@ -99,7 +100,7 @@ class CrashActivity : ComponentActivity() {
 
         @Composable
     fun CrashUI(context: Activity, crashInfo: String, onRestart: () -> Unit) {
-        val toast = stringResource(R.string.tip_copied)
+        val toast = stringResource(UiR.string.tip_copied)
         //val result = BarUtils.getStatusBarHeight()
         Column(Modifier.fillMaxSize()) {
             //Spacer(modifier = Modifier.height((result / context.resources.displayMetrics.density + 0.5f).dp))
@@ -109,8 +110,8 @@ class CrashActivity : ComponentActivity() {
                     .weight(1f)
             ) {
                 Title(
-                    title = stringResource(R.string.crash_title),
-                    subTitle = "Σ(っ °Д °;)っ " + stringResource(R.string.crash_subtitle),
+                    title = stringResource(UiR.string.crash_title),
+                    subTitle = "Σ(っ °Д °;)っ " + stringResource(UiR.string.crash_subtitle),
                     onBack = {
                         //返回，也就是退出整个软件
                         context.finish()
@@ -189,7 +190,7 @@ class CrashActivity : ComponentActivity() {
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = stringResource(R.string.crash_copy_details),
+                        text = stringResource(UiR.string.crash_copy_details),
                         color = Color.White,
                         fontWeight = FontWeight.Bold
                     )
@@ -225,7 +226,7 @@ class CrashActivity : ComponentActivity() {
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = stringResource(R.string.crash_copy_brief),
+                        text = stringResource(UiR.string.crash_copy_brief),
                         style = TextStyle(
                             brush = Brush.linearGradient(
                                 colors = listOf(
@@ -253,7 +254,7 @@ class CrashActivity : ComponentActivity() {
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = stringResource(R.string.crash_restart_app),
+                        text = stringResource(UiR.string.crash_restart_app),
                         style = TextStyle(
                             brush = Brush.linearGradient(
                                 colors = listOf(

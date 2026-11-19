@@ -149,6 +149,7 @@ import com.rotatsulabs.axolotl.ui.widgets.basic.ShadowImageWithCache
 import com.rotatsulabs.axolotl.ui.widgets.basic.KeyedContent
 import java.io.File
 import kotlin.math.abs
+import com.rotatsulabs.axolotl.ui.R as UiR
 
 /*//MediaPlayer全局控制器
 var mediaController = com.rotatsulabs.axolotl.core.playback.MediaController*/
@@ -300,7 +301,7 @@ class MainActivity : BaseActivity() {
                         }
 
                         // 导航区域
-                        val defaultHome = stringResource(id = R.string.page_home_title)
+                        val defaultHome = stringResource(id = UiR.string.page_home_title)
 
                         val nowLabel = rememberSaveable(key = "MainActivity_nowLabel") {
                             mutableStateOf(defaultHome)
@@ -584,9 +585,9 @@ class MainActivity : BaseActivity() {
                                                 nowLabel.value = it
 
                                                 val home =
-                                                    context.getString(R.string.page_home_title)
+                                                    context.getString(UiR.string.page_home_title)
                                                 val library =
-                                                    context.getString(R.string.page_library_title)
+                                                    context.getString(UiR.string.page_library_title)
                                                 if (route.value == UI.HomePage) {
                                                     scope.launch {
                                                         pagerState.animateScrollToPage(
@@ -615,12 +616,12 @@ class MainActivity : BaseActivity() {
                                             },
                                             items = listOf(
                                                 NavItem(
-                                                    stringResource(id = R.string.page_home_title),
-                                                    R.drawable.flamingo_icon
+                                                    stringResource(id = UiR.string.page_home_title),
+                                                    UiR.drawable.flamingo_icon
                                                 ),
                                                 NavItem(
-                                                    stringResource(id = R.string.page_library_title),
-                                                    R.drawable.ic_uitabbar_library
+                                                    stringResource(id = UiR.string.page_library_title),
+                                                    UiR.drawable.ic_uitabbar_library
                                                 )
                                             ),
                                             modifier = Modifier
@@ -980,7 +981,7 @@ class MainActivity : BaseActivity() {
                                                                             if (it) {
                                                                                 Icon(
                                                                                     painterResource(
-                                                                                        id = R.drawable.ic_nowplaying_mp_pause
+                                                                                        id = UiR.drawable.ic_nowplaying_mp_pause
                                                                                     ),
                                                                                     contentDescription = "Pause",
                                                                                     modifier = Modifier
@@ -990,7 +991,7 @@ class MainActivity : BaseActivity() {
                                                                             } else {
                                                                                 Icon(
                                                                                     painterResource(
-                                                                                        id = R.drawable.ic_nowplaying_mp_play
+                                                                                        id = UiR.drawable.ic_nowplaying_mp_play
                                                                                     ),
                                                                                     contentDescription = "Play",
                                                                                     modifier = Modifier
@@ -1023,7 +1024,7 @@ class MainActivity : BaseActivity() {
                                                                     ) {
                                                                         Icon(
                                                                             painterResource(
-                                                                                id = R.drawable.ic_nowplaying_mp_fforward
+                                                                                id = UiR.drawable.ic_nowplaying_mp_fforward
                                                                             ),
                                                                             contentDescription = "Next",
                                                                             modifier = Modifier
@@ -1147,12 +1148,12 @@ class MainActivity : BaseActivity() {
 
             KeyedContent {
                 OptionDialog(
-                    title = stringResource(id = R.string.permission_grant_title),
-                    subTitle = stringResource(id = R.string.permission_grant_subtitle),
+                    title = stringResource(id = UiR.string.permission_grant_title),
+                    subTitle = stringResource(id = UiR.string.permission_grant_subtitle),
                     content = {
-                        Text(text = stringResource(id = R.string.permission_grant_desc))
+                        Text(text = stringResource(id = UiR.string.permission_grant_desc))
                     },
-                    positiveContent = stringResource(id = R.string.permission_grant_button_positive),
+                    positiveContent = stringResource(id = UiR.string.permission_grant_button_positive),
                     properties = dialogProperties,
                     bottomSheetState = bottomSheetState,
                     onPositive = {
@@ -1167,7 +1168,7 @@ class MainActivity : BaseActivity() {
                             }
                         }
                     },
-                    negativeContent = stringResource(id = R.string.permission_grant_button_negative),
+                    negativeContent = stringResource(id = UiR.string.permission_grant_button_negative),
                     onNegative = {
                         scope.launch { bottomSheetState.hide() }.invokeOnCompletion {
                             if (!bottomSheetState.isVisible) {
