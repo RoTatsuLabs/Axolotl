@@ -1,0 +1,109 @@
+name: Preview Build
+
+# Builds a standalone preview APK on manual dispatch.
+# It is the release build (R8 on), signed with the release keystore when the KEYSTORE_BASE64 and
+# RELEASE_* secrets exist, so previews update over each other and over releases. Without the secrets it
+# falls back to a debug build signed with the runner's throwaway debug key.
+#
+# The APK is published as a workflow artifact (zipped by GitHub). The file name and SHA-256 hash are
+# printed to the run summary.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Only keep the latest preview build per branch/ref running.
+concurrency:
+  group: preview-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    name: Build preview APK
+    if: github.actor == github.repository_owner
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Decode keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            printf '%s' "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.keystore"
+            echo "HAS_KEYSTORE=true" >> "$GITHUB_ENV"
+          else
+            echo "::warning::KEYSTORE_BASE64 is not set, building a debug APK signed with the runner's debug key"
+          fi
+
+      - name: Build preview APK
+        env:
+          RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          if [ "${HAS_KEYSTORE:-}" = "true" ]; then
+            echo "VARIANT=release" >> "$GITHUB_ENV"
+            ./gradlew :app:assembleRelease --no-daemon --stacktrace \
+              -PRELEASE_STORE_FILE="$RUNNER_TEMP/release.keystore" \
+              -PRELEASE_STORE_PASSWORD="$RELEASE_STORE_PASSWORD" \
+              -PRELEASE_KEY_ALIAS="$RELEASE_KEY_ALIAS" \
+              -PRELEASE_KEY_PASSWORD="$RELEASE_KEY_PASSWORD"
+          else
+            echo "VARIANT=debug" >> "$GITHUB_ENV"
+            ./gradlew :app:assembleDebug --no-daemon --stacktrace
+          fi
+
+      - name: Collect APK and compute checksum
+        id: apk
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          SAFE_REF=$(echo "${GITHUB_REF_NAME}" | tr '/ ' '__')
+          BASE="Axolotl-preview-${SAFE_REF}-${SHORT_SHA}"
+          mkdir -p out
+
+          FILES=(app/build/outputs/apk/"${VARIANT}"/*.apk)
+          if [ ${#FILES[@]} -ne 1 ]; then
+            echo "::error::Expected exactly one APK under app/build/outputs/apk/${VARIANT}, found ${#FILES[@]}"
+            exit 1
+          fi
+          DEST="out/${BASE}.apk"
+          cp "${FILES[0]}" "$DEST"
+          SHA256=$(sha256sum "$DEST" | awk '{print $1}')
+          SIZE=$(du -h "$DEST" | cut -f1)
+
+          {
+            echo "**Preview build of \`${GITHUB_REF_NAME}\`** (${VARIANT} variant)."
+            echo ""
+            echo "| File | Size | SHA-256 |"
+            echo "| --- | --- | --- |"
+            echo "| \`$(basename "$DEST")\` | ${SIZE} | \`${SHA256}\` |"
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "base=${BASE}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.apk.outputs.base }}
+          path: out/${{ steps.apk.outputs.base }}.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Clean up
+        if: always()
+        run: rm -f "$RUNNER_TEMP/release.keystore"
