@@ -86,8 +86,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ["*.*"], dir: "${rootDir}/core/libs")
-    implementation project ":overscroll"
-    implementation project ":core"
+    implementation project(":overscroll")
+    implementation project(":core")
 
     implementation 'androidx.core:core-ktx:1.13.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.4'
