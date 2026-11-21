@@ -51,6 +51,8 @@ import com.rotatsulabs.axolotl.core.data.model.albumId
 import com.rotatsulabs.axolotl.core.data.model.album
 import com.rotatsulabs.axolotl.core.data.model.composer
 import com.rotatsulabs.axolotl.core.data.model.uri
+import com.rotatsulabs.axolotl.core.data.model.artistsList
+import com.rotatsulabs.axolotl.core.data.model.artistsName
 
 /*@Parcelize
 @Stable
