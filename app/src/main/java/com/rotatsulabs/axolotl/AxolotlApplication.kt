@@ -102,9 +102,10 @@ class AxolotlApplication : Application() {
                                 }
                             }*/
 
-                            if (playStatusData.music != null) {
+                            val statusMusic = playStatusData.music
+                            if (statusMusic != null) {
                                 com.rotatsulabs.axolotl.core.playback.MediaController.prepare(
-                                    playStatusData.music,
+                                    statusMusic,
                                     playListData.playingMusicList!!,
                                     playStatusData.position,
                                     playStatusData.shuffleModeEnabled,
